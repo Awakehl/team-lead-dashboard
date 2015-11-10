@@ -1,0 +1,28 @@
+{
+	"name": "team-lead-dashboard",
+	"version": "1.0.0",
+	"description": "Team lead dashboard server",
+	"author": "Semen Tanianskii <awakehl@gmail.com>",
+    "contributors": [
+        {
+            "name": "Semen Tanianskii",
+            "email": "awakehl@gmail.com"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Awakehl/team-lead-dashboard.git"
+    },
+	"dependencies": {
+        "sequelize": "*",
+        "commander": "*",
+        "lodash": "*",
+        "path": "*"
+    },
+    "devDependencies": {
+
+	},
+    "scripts": {
+        "sync": "node app/src/tasks/sync.js"
+    }
+}
