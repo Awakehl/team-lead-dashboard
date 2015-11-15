@@ -1,9 +1,7 @@
-var UserRepository = (function () {
+module.exports = (function () {
 
     return {
 
     }
 
 })();
-
-module.exports = {repository: {UserRepository: UserRepository}};

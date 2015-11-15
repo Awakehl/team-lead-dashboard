@@ -1,9 +1,9 @@
-var User = (function () {
+var User = function () {
 
-    return Connection.seq.define('user', {
+    return Di.Container.getFramework().define('user', {
         name: Sequelize.STRING
     });
 
-})();
+};
 
 module.exports = User;

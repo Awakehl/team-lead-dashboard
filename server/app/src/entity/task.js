@@ -1,12 +1,12 @@
-var Task = (function () {
+var Task = function () {
 
-    return Connection.seq.define('task', {
+    return Di.Container.getFramework().define('task', {
         name: Sequelize.STRING,
         summary: Sequelize.STRING,
         estimation: Sequelize.DOUBLE,
         status: Sequelize.INTEGER
     });
 
-})();
+};
 
-module.exports = {entity: {task: Task}};
+module.exports = Task;

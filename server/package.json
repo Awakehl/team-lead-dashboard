@@ -23,6 +23,6 @@
 
 	},
     "scripts": {
-        "sync": "node app/src/tasks/sync.js"
+        "sync": "node app/src/task/sync.js"
     }
 }

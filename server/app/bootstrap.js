@@ -1,16 +1,26 @@
 AutoloadService = require('./src/service/autoload-service.js');
 
-exports = AutoloadService.require(
+global.tl = AutoloadService.require(
     './src/di/',
-    './src/frameworks/'
-    //'./src/entity/',
-    //'./src/repository/',
-    //'./src/service/'
+    './src/framework/',
+    './src/entity/',
+    './src/repository/',
+    './src/service/'
 );
 
-AutoloadService.expose(exports);
+//AutoloadService.expose(exports);
 
-console.log(Di);
+
+
+
+tl.prototype = tl.Di.Container.getService('AppService');
+
+
+console.log(tl);
+
+
+
+
 
 /*require('./src/di/');
 require('./src/frameworks/');

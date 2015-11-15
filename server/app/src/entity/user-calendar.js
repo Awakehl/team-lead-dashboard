@@ -1,6 +1,6 @@
-var UserCalendar = (function () {
+var UserCalendar = function () {
 
-    return Connection.seq.define('userCalendar', {
+    return Di.Container.getFramework().define('userCalendar', {
         // It is possible to create foreign keys:
         user_id: {
             type: Sequelize.INTEGER,
@@ -20,6 +20,6 @@ var UserCalendar = (function () {
         standUp: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: true }
     });
 
-})();
+};
 
 module.exports = UserCalendar;

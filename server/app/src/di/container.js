@@ -4,43 +4,37 @@
  */
 var Container = (function () {
 
-    /*var YAML = require('yamljs');
-
-    var conf = YAML.load('di.yml');
-
-    var getOverride = function(name) {
-        return conf[name] ? global[name] : null;
+    var share = function(callable) {
+        var object = null;
+        return function() {
+            if (null === object) {
+                object = callable();
+            }
+            return object;
+        }
     };
 
-    var getDefinition = function() {
+    var services = share(function() {
+        return new tl.Di.Services();
+    });
 
-    };*/
-
-    var di = this;
-
-    return {
-        getModel: function(name) {
+    var interface = {
+        getEntity: function(name) {
             //return getOverride('entity.' + name) || entity[name];
         },
         getRepository: function(name) {
             //return getOverride('repository.' + name) ||repository[name];
         },
         getService: function(name) {
-            return Services[name]();
+            return services()[name]();
         },
         getFramework: function() {
-            return di.getService('frameworkService');
+            return interface.getService('frameworkService');
         },
-        share: function(callable) {
-            var object;
-            return function() {
-                if (null === object) {
-                    object = callable(di);
-                }
-                return object;
-            }
-        }
+        share: share
     };
+
+    return interface;
 
 })();
 

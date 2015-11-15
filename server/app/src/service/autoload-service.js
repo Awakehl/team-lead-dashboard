@@ -26,7 +26,7 @@ var AutoloadService = (function () {
 
                 exports[namespace] = {};
 
-                console.log('+++' + namespace);
+
 
                 require("fs").readdirSync(normalizedPath).forEach(function(file) {
                     exports[namespace][
@@ -39,6 +39,7 @@ var AutoloadService = (function () {
                 });
             });
 
+            //console.log(exports);
             return exports;
 
         },

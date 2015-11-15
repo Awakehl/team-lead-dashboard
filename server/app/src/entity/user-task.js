@@ -1,6 +1,6 @@
-var UserTask = (function () {
+var UserTask = function () {
 
-    return Connection.seq.define('userTask', {
+    return Di.Container.getFramework().define('userTask', {
         user_id: {
             type: Sequelize.INTEGER,
             references: {
@@ -19,6 +19,6 @@ var UserTask = (function () {
         endTime: Sequelize.DATETIME
     });
 
-})();
+};
 
 module.exports = UserTask;

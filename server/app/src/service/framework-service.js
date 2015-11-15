@@ -1,4 +1,4 @@
-var FrameworkService = (function () {
+var FrameworkService = function () {
 
     var currentFrameworkInterface;
     if (null === currentFrameworkInterface) {
@@ -9,10 +9,12 @@ var FrameworkService = (function () {
         }
     }
     return {
-        sync: currentFrameworkInterface.sync(DI.getService('framework'))
+        sync: function() {
+            currentFrameworkInterface.sync(DI.getService('framework'))
+        }
     }
 
-})();
+};
 
 module.exports = FrameworkService;
 

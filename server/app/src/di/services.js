@@ -1,20 +1,22 @@
-var Services = (function () {
+var Services = function () {
 
     return {
 
-        framework: function() {
+        framework: tl.Di.Container.share(function() {
             return new Sequelize();
-        },
+        }),
 
-        frameworkService: function() {
-            return new FrameworkService();
-        }
+        frameworkService: tl.Di.Container.share(function() {
+            return new tl.Service.FrameworkService();
+        }),
 
-
+        appService: tl.Di.Container.share(function() {
+            return new tl.Service.AppService();
+        })
     }
 
-})();
+};
 
 //module.exports = {global[TLNamespace]Services;
 
-module.exports = {service: {Services: Services}};
+module.exports = Services;
