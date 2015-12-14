@@ -1,9 +1,14 @@
+function UserDTO() {
+    this.name = null;
+}
+
 var User = function () {
 
-    return Di.Container.getFramework().define('user', {
-        name: Sequelize.STRING
+    return app.getFramework().define('user', {
+        name: app.getFramework().definition.STRING
     });
 
 };
 
 module.exports = User;
+

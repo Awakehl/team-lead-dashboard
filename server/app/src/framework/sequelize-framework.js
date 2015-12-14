@@ -1,11 +1,18 @@
-var SequelizeFramework = function() {
+var SequelizeFramework = function(framework, definition) {
 
-    var o = Object.create(Di.Container.getService('FrameworkInterface'));
-    o.prototype.sync = function(framework) {
-        framework.sync();
+    var o = tl.Framework.FrameworkInterface();
+
+    o.definition = definition;
+
+    o.sync = function() {
+        return framework.sync();
+    };
+
+    o.define = function() {
+        return framework.define(arguments[0], arguments[1]);
     };
 
     return o;
 };
 
-module.exports = SequelizeFramework;
+module.exports = SequelizeFramework

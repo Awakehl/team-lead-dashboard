@@ -1,10 +1,10 @@
 var Task = function () {
 
-    return Di.Container.getFramework().define('task', {
-        name: Sequelize.STRING,
-        summary: Sequelize.STRING,
-        estimation: Sequelize.DOUBLE,
-        status: Sequelize.INTEGER
+    return app.getFramework().define('task', {
+        name: app.getFramework().definition.STRING,
+        summary: app.getFramework().definition.STRING,
+        estimation: app.getFramework().definition.DOUBLE,
+        status: app.getFramework().definition.INTEGER
     });
 
 };

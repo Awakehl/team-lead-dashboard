@@ -26,8 +26,6 @@ var AutoloadService = (function () {
 
                 exports[namespace] = {};
 
-
-
                 require("fs").readdirSync(normalizedPath).forEach(function(file) {
                     exports[namespace][
                         _.capitalize(
@@ -39,14 +37,13 @@ var AutoloadService = (function () {
                 });
             });
 
-            //console.log(exports);
             return exports;
 
         },
 
-        expose: function(exports) {
+        expose: function(exports, to) {
             for (var i in exports) {
-                global[i] = exports[i];
+                to[i] = exports[i];
             }
         }
 

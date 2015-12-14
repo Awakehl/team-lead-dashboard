@@ -1,22 +1,22 @@
 var UserTask = function () {
 
-    return Di.Container.getFramework().define('userTask', {
+    return app.getFramework().define('userTask', {
         user_id: {
-            type: Sequelize.INTEGER,
+            type: app.getFramework().definition.INTEGER,
             references: {
-                model: User
+                model: app.getEntity('User')
             }
         },
 
        task_id: {
-           type: Sequelize.INTEGER,
+           type: app.getFramework().definition.INTEGER,
            references: {
-               model: Task
+               model: app.getEntity('Task')
            }
         },
 
-        startTime: Sequelize.DATETIME,
-        endTime: Sequelize.DATETIME
+        startTime: app.getFramework().definition.DATE,
+        endTime: app.getFramework().definition.DATE
     });
 
 };

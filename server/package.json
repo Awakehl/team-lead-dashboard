@@ -15,14 +15,18 @@
     },
 	"dependencies": {
         "sequelize": "*",
+        "mysql": "*",
         "commander": "*",
         "lodash": "*",
-        "path": "*"
+        "path": "*",
+        "typescript": "*",
+        "event-dispatcher": "*"
     },
     "devDependencies": {
 
 	},
     "scripts": {
-        "sync": "node app/src/task/sync.js"
+        "sync": "node app/src/task/sync.js",
+        "import": "node app/src/task/import.js"
     }
 }

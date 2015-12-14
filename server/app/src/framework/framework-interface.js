@@ -1,6 +1,7 @@
 var FrameworkInterface = function() {
     return {
-        sync: function(framework) {}
+        sync: function(framework) {},
+        definition: null
     }
 };
 
