@@ -26,6 +26,10 @@ var Container = (function () {
 
     var interface = {
 
+        /**
+         * @param {string} name
+         * @return {Model}
+         */
         getEntity: function(name) {
             if (!entities().hasOwnProperty(name)) {
                 console.error('Entity ' + name + ' is not defined');

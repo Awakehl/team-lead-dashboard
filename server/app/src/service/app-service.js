@@ -40,6 +40,13 @@ function AppService() {
     };
 
     /**
+     * @returns TaskRepository
+     */
+    this.getTaskRepository = function() {
+        return this.getRepository('Task');
+    };
+
+    /**
      * @returns {TaskDTO}
      */
     this.getTaskDTO = function() {
@@ -51,12 +58,9 @@ function AppService() {
      */
     this.getUserDTO = function() {
         return tl.Di.Container.getDTO('User');
-    }
+    };
 
-    /**
-     * @returns Model
-     */
-        this.getEntity = tl.Di.Container.getEntity;
+    this.getEntity = tl.Di.Container.getEntity;
 
 
    /* this.getEntities = function() {

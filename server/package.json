@@ -20,7 +20,8 @@
         "lodash": "*",
         "path": "*",
         "typescript": "*",
-        "event-dispatcher": "*"
+        "event-dispatcher": "*",
+        "promise": "*"
     },
     "devDependencies": {
 

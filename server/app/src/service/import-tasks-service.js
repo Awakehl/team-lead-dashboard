@@ -7,14 +7,26 @@ function ImportTasksService() {
          */
         var handleTasksLoaded = function(event) {
 
-            app.getTasksService().updateTasks(event.data);
+            /**
+             * @type {TaskDTO[]}
+             */
+            var tasks = event.data;
+
+            app.getTasksService()
+                .updateTasks(tasks)
+                .then(function() {
+                    //handleTasksUpdated(tasks)
+
+                    app.getUserTasksService()
+                        .updateTasks(tasks)
+                });
 
         };
 
         /**
-         * @param {Event} event
+         * @type {TaskDTO[]}
          */
-        var handleTasksUpdated = function(event) {
+        var handleTasksUpdated = function(tasks) {
 
         };
 
