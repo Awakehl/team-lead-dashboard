@@ -1,13 +1,15 @@
-import UserTaskDTO = require('UserTaskDTO');
+import {UserTaskDTO} from "../dto/user-task-dto";
+import {Promise} from "../../../node_modules/typescript/lib/lib.es6";
+export class UserTaskRepository {
 
-class UserTaskRepository {
+    public getTasks():Promise<Array<UserTaskDTO>> {
 
-    public getTasks():Array<UserTaskDTO> {
+        var promise: Promise<UserTaskDTO[]>;
 
-        return [];
+
+
+        return promise;
 
     }
 
 }
-
-export var UserTaskRepository = UserTaskRepository;
