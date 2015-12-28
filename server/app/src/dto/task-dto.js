@@ -1,11 +1,11 @@
-function TaskDTO() {
-
-    this.key = null;
-    this.assignee = null;
-    this.estimation = null;
-    this.summary = null;
-    this.status = null;
-
-}
-
-module.exports = TaskDTO;
+var TaskDTO = (function () {
+    function TaskDTO(key, assignee, estimation, summary, status) {
+        this.key = key;
+        this.assignee = assignee;
+        this.estimation = estimation;
+        this.summary = summary;
+        this.status = status;
+    }
+    return TaskDTO;
+})();
+exports.TaskDTO = TaskDTO;

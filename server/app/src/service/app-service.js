@@ -1,85 +1,28 @@
-function AppService() {
-
-    var _ = require("lodash");
-
-    this.getService = tl.Di.Container.getService;
-
-    /**
-     * @returns TasksService
-     */
-    this.getTasksService = function() {
-        return this.getService('TasksService');
+var AppService = (function () {
+    function AppService() {
+    }
+    AppService.prototype.getEntity = function (entity) {
+        return tl.Di.Container.getEntity;
     };
-
-    /**
-     * @returns UpdateTasksDispatcherService
-     */
-    this.getUpdateTasksDispatcherService = function() {
-        return this.getService('UpdateTasksDispatcherService');
+    AppService.prototype.getConf = function (name) {
+        return tl.Conf[_.capitalize(name)];
     };
-
-    /**
-     * @returns JiraTasksService
-     */
-    this.getJiraTasksService = function() {
-        return this.getService('JiraTasksService');
+    ;
+    AppService.prototype.getService = function (name) {
+        return tl.Di.Container.getService(name);
     };
-
-    /**
-     * @returns EventsService
-     */
-    this.getEventsService = function() {
-        return this.getService('EventsService');
+    ;
+    AppService.prototype.getJiraTasksService = function () {
+        return tl.Di.Container.getService('JiraTasksService');
     };
-
-    /**
-     * @returns ImportTasksService
-     */
-    this.getImportTasksService = function() {
-        return this.getService('ImportTasksService');
+    ;
+    AppService.prototype.getJiraTaskRepository = function () {
+        return tl.Di.Container.getRepository('JraTaskRepository');
     };
-
-    /**
-     * @returns TaskRepository
-     */
-    this.getTaskRepository = function() {
-        return this.getRepository('Task');
+    ;
+    AppService.prototype.getFramework = function () {
+        return tl.Di.Container.getFramework();
     };
-
-    /**
-     * @returns {TaskDTO}
-     */
-    this.getTaskDTO = function() {
-        return tl.Di.Container.getDTO('Task');
-    };
-
-    /**
-     * @returns {UserDTO}
-     */
-    this.getUserDTO = function() {
-        return tl.Di.Container.getDTO('User');
-    };
-
-    this.getEntity = tl.Di.Container.getEntity;
-
-
-   /* this.getEntities = function() {
-        return tl.Di.Entities
-    };*/
-
-    this.getRepository = tl.Di.Container.getRepository;
-    this.getFramework = tl.Di.Container.getFramework;
-
-    this.getConf = function(name) {
-        return tl.Conf[_.capitalize(name)]
-    };
-
-    this.share = function(name) {
-        return tl.Conf[_.capitalize(name)]
-    };
-
-}
-
-
-module.exports = AppService;
-
+    return AppService;
+})();
+exports.AppService = AppService;
