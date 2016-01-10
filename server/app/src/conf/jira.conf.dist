@@ -3,7 +3,8 @@ var jira = {
     tasks_url: "/rest/api/2/search?jql=assignee in () and updatedDate > '__DATETIME__'",
     sprint_url: "/rest/api/2/search?jql=assignee in (EMPTY) AND sprint in openSprints() AND sprint = ",
     login: 'fixme',
-    password: 'fixme'
+    password: 'fixme',
+    protocol: 'https'
 }
 
 module.exports = jira;

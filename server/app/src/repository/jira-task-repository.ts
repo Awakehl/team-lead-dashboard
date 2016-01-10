@@ -4,11 +4,12 @@
 
 import {TaskDTO} from "../dto/task-dto";
 import {AppService} from "../service/app-service";
+import http = require('http');
 import https = require('https');
 
 declare var app: AppService;
 
-export class JiraTaskRepositiry {
+export class JiraTaskRepository {
 
     private config: any = app.getConf('jira');
 
@@ -25,7 +26,8 @@ export class JiraTaskRepositiry {
             };
 
             var self = this;
-            var req = https.request(options, function (res) {
+            let requester = require(this.config['protocol']);
+            var req = requester.request(options, function (res) {
                 var body:string = '';
                 res.setEncoding('utf8');
                 res.on('data', function (d) {
@@ -37,7 +39,7 @@ export class JiraTaskRepositiry {
                         var obj = JSON.parse(body);
                         issues = self.parseIssues(obj.issues);
                     } catch (e) {
-                        console.error('Jira error: ' + e);
+                        console.error('Jira error: ' + e, 'options', options);
                     }
 
                     resolve(issues);

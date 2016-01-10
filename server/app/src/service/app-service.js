@@ -1,11 +1,14 @@
+/// <reference path="../../../typings/sequelize/sequelize.d.ts"/>
+/// <reference path="../../../typings/lodash/lodash.d.ts"/>
 var AppService = (function () {
     function AppService() {
+        this._ = require('lodash');
     }
     AppService.prototype.getEntity = function (entity) {
         return tl.Di.Container.getEntity;
     };
     AppService.prototype.getConf = function (name) {
-        return tl.Conf[_.capitalize(name)];
+        return tl.Conf[this._.capitalize(name)];
     };
     ;
     AppService.prototype.getService = function (name) {
@@ -16,8 +19,11 @@ var AppService = (function () {
         return tl.Di.Container.getService('JiraTasksService');
     };
     ;
+    AppService.prototype.getImportTasksService = function () {
+        return tl.Di.Container.getService('ImportTasksService');
+    };
     AppService.prototype.getJiraTaskRepository = function () {
-        return tl.Di.Container.getRepository('JraTaskRepository');
+        return tl.Di.Container.getRepository('JiraTaskRepository');
     };
     ;
     AppService.prototype.getFramework = function () {

@@ -20,8 +20,9 @@
         "lodash": "*",
         "path": "*",
         "typescript": "*",
-        "event-dispatcher": "*",
-        "promise": "*"
+        "grunt-cli": "",
+        "grunt-typescript": "",
+        "grunt-contrib-jshint": ""
     },
     "devDependencies": {
 

@@ -40,8 +40,17 @@ var Container = (function () {
             return tl.Dto[name + 'Dto'];
         },
         getRepository: function(name) {
+
+            console.log('Get repo: '+name);
+            if (!tl.Repository.hasOwnProperty(name)) {
+                console.log(name, '->', tl.Repository[name]);
+                console.error('Available repositories:', tl.Repository);
+            }
+
             return (share(function() {
-                return tl.Repository[name+'Repository']();
+                var r = new tl.Repository[name][name]();
+                //console.log('res->', r);
+                return r;
             }))();
         },
         getService: function(name) {
@@ -49,6 +58,7 @@ var Container = (function () {
             if (!services().hasOwnProperty(name)) {
                 console.error('Service ' + name + ' is not defined');
             }
+           // console.log(name, services()[name]);
             return services()[name]();
         },
         getFramework: function() {

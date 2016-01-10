@@ -27,13 +27,15 @@ var AutoloadService = (function () {
                 exports[namespace] = {};
 
                 require("fs").readdirSync(normalizedPath).forEach(function(file) {
-                    exports[namespace][
-                        _.capitalize(
-                            _.camelCase(
-                                file
-                                    .replace('.js', '')
-                            )
-                        )] = require(normalizedPath + file);
+                    if (file.indexOf('.js') !== -1) {
+                        exports[namespace][
+                            _.capitalize(
+                                _.camelCase(
+                                    file
+                                        .replace('.js', '')
+                                )
+                            )] = require(normalizedPath + file);
+                    }
                 });
             });
 

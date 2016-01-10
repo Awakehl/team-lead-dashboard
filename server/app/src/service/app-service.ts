@@ -1,8 +1,16 @@
+/// <reference path="../../../typings/sequelize/sequelize.d.ts"/>
+/// <reference path="../../../typings/lodash/lodash.d.ts"/>
+
 import {JiraTasksService} from "./jira-tasks-service";
 import {Model} from "sequelize";
-import {JiraTaskRepositiry} from "../repository/jira-task-repository";
+import {JiraTaskRepository} from "../repository/jira-task-repository";
+import {ImportTasksService} from "./import-tasks-service";
 declare var tl: any;
+declare var _: any;
+
 export class AppService {
+
+    _ = require('lodash');
 
 
     getEntity(entity: string):Model<string, any> {
@@ -10,7 +18,7 @@ export class AppService {
     }
 
     getConf(name: string): any {
-        return tl.Conf[_.capitalize(name)]
+        return tl.Conf[this._.capitalize(name)]
     };
 
     getService(name: string): any {
@@ -21,8 +29,16 @@ export class AppService {
         return tl.Di.Container.getService('JiraTasksService');
     };
 
-    getJiraTaskRepository(): JiraTaskRepositiry {
-        return tl.Di.Container.getRepository('JraTaskRepository')
+    getImportTasksService(): ImportTasksService {
+        return tl.Di.Container.getService('ImportTasksService');
+    }
+
+    getJiraTaskRepository(): JiraTaskRepository {
+        return tl.Di.Container.getRepository('JiraTaskRepository')
+    };
+
+    getTaskRepository(): JiraTaskRepository {
+        return tl.Di.Container.getRepository('JiraTaskRepository')
     };
 
     getFramework(): any {
