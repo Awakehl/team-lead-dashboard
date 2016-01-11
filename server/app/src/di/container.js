@@ -34,7 +34,12 @@ var Container = (function () {
             if (!entities().hasOwnProperty(name)) {
                 console.error('Entity ' + name + ' is not defined');
             }
-            return entities()[name]();
+
+            return (share(function() {
+                var r = entities()[name]();
+                //console.log('res->', r);
+                return r;
+            }))();
         },
         getDTO: function(name) {
             return tl.Dto[name + 'Dto'];

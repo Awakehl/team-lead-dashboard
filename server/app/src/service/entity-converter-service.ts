@@ -1,10 +1,9 @@
 import {UserTaskDTO} from "../dto/user-task-dto";
-import {Model} from "sequelize";
 import {TaskDTO} from "../dto/task-dto";
 
 export class EntityConverterService {
 
-    static toTaskDTO(model: Model): TaskDTO {
+    toTaskDTO(model: any): TaskDTO {
 
         return new TaskDTO(
             model['key'],
@@ -15,7 +14,7 @@ export class EntityConverterService {
         );
     }
 
-    static toUserTaskDTO(model: Model): UserTaskDTO {
+    toUserTaskDTO(model: any): UserTaskDTO {
 
         return new UserTaskDTO(
             model['key'],

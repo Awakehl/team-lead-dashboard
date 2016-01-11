@@ -1,18 +1,16 @@
-/// <reference path="../../../typings/bluebird/bluebird.d.ts"/>
-
 import {UserTaskDTO} from "../dto/user-task-dto";
 import {AppService} from "../service/app-service";
 import {Model} from "sequelize";
-import {EntityConverterService} from "../service/entity-convertor-service";
+import {EntityConverterService} from "../service/entity-converter-service";
 import {TaskDTO} from "../dto/task-dto";
 
 declare var app: AppService;
 
 export class TaskRepository {
 
-    public updateOrInsertTasks(tasks:TaskDTO[]):Promise {
+    public updateOrInsertTasks(tasks:TaskDTO[]):Promise<void> {
 
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
 
             let keys: String[] = [];
             let task:TaskDTO;
@@ -20,13 +18,13 @@ export class TaskRepository {
                 keys.push(task.key);
             }
 
-            app.getEntity('Task').findAll({where: {key: {$in: keys}}}).then(
-                (dbTasks: Model<string, any>): void => {
+            this.getEntity().findAll({where: {key: {$in: keys}}}).then(
+                (dbTasks: string[]): void => {
 
                     let existing: any = {};
 
                     for (let dbTask of dbTasks) {
-                        task = EntityConverterService.toTaskDTO(dbTask);
+                        task = app.getEntityConverterService().toTaskDTO(dbTask);
                         existing[task.key] = task;
                     }
 
@@ -50,71 +48,48 @@ export class TaskRepository {
                     resolve();
                 }
             );
-
-
-            /*app.getEntity('UserTask').findAll().then(
-                (tasks: Model<string, any>): void => {
-
-                    let res: UserTaskDTO[] = [];
-
-                    for (let task of tasks) {
-                        res.push(
-                            EntityConverterService.toUserTaskDTO(task)
-                        )
-                    }
-
-                    resolve(res);
-                }
-            );*/
         });
     }
 
-    /**
-     * @param {TaskDTO[]} dtos
-     * @return {Promise<Array<Instance>>}
-     */
-    private createMany(dtos:TaskDTO[]): Promise {
+    private createMany(dtos:TaskDTO[]): Promise<string[]> {
 
-        return app.getEntity('Task').bulkCreate(dtos);
+        return this.getEntity().bulkCreate(dtos);
 
     };
 
-    /**
-     * @param {TaskDTO[]} dtos
-     * @return {Promise}
-     */
-    private updateMany(dtos) {
+    private updateMany(dtos: TaskDTO[]): Promise<void> {
 
-     return new Promise(function(resolve) {
+        return new Promise<void>(function(resolve: Function): void {
 
-        var dtosConsumable = dtos.concat();
+            var dtosConsumable = dtos.concat();
 
-        var consume = function() {
+            var consume: Function = function(): void {
 
-            if (dtosConsumable.length) {
+                if (dtosConsumable.length) {
 
-                /**
-                 * @type {TaskDTO}
-                 */
-                var dto = dtosConsumable.shift();
+                    var dto: TaskDTO = dtosConsumable.shift();
 
-                model.update(
-                    dto,
-                    {
-                        where: {
-                            key: dto.key
+                    this.getEntity().update(
+                        dto,
+                        {
+                            where: {
+                                key: dto.key
+                            }
                         }
-                    }
-                ).then(
-                    function() {
-                        consume();
-                    }
-                )
-            } else {
-                resolve([]);
+                    ).then(
+                        function() {
+                            consume();
+                        }
+                    )
+                } else {
+                    resolve([]);
+                }
             }
-        }
-    });
-}
+            consume();
+        });
+    }
 
+    private getEntity(): Model<string, any> {
+        return app.getEntity('Task');
+    }
 }

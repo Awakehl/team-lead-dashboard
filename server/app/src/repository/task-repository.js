@@ -1,121 +1,71 @@
-'use strict'
-
-function TaskRepository() {
-
-    var model = app.getEntity('Task');
-
-    /**
-     * @param model
-     * @returns {TaskDTO}
-     */
-    var modelToDto = function(model) {
-
-        var dto = new (app.getTaskDTO());
-        dto.assignee = model.assignee;
-        dto.key = model.key;
-        dto.estimation = model.estimation;
-        dto.status = model.status;
-        dto.summary = model.summary;
-
-        return dto;
-
-    };
-
-    var Promise = require('promise');
-
-    /**
-     * @return {Promise}
-     */
-    this.findByKeys = function (keys) {
-
-        return new Promise(function(resolve) {
-
-            model.findAll(
-                {
-                    where: {
-                        key: {
-                            $in: keys
-                        }
+var TaskRepository = (function () {
+    function TaskRepository() {
+    }
+    TaskRepository.prototype.updateOrInsertTasks = function (tasks) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            var keys = [];
+            var task;
+            for (var _i = 0; _i < tasks.length; _i++) {
+                task = tasks[_i];
+                keys.push(task.key);
+            }
+            _this.getEntity().findAll({ where: { key: { $in: keys } } }).then(function (dbTasks) {
+                var existing = {};
+                for (var _i = 0; _i < dbTasks.length; _i++) {
+                    var dbTask = dbTasks[_i];
+                    task = app.getEntityConverterService().toTaskDTO(dbTask);
+                    existing[task.key] = task;
+                }
+                var update = [];
+                var insert = [];
+                for (var _a = 0; _a < tasks.length; _a++) {
+                    task = tasks[_a];
+                    if (existing.hasOwnProperty(task.key) && task != existing[task.key]) {
+                        update.push(task);
+                    }
+                    else if (!existing.hasOwnProperty(task.key)) {
+                        insert.push(task);
                     }
                 }
-            ).then(
-
-                /**
-                 * @param {Model[]} results
-                 */
-                function(results) {
-
-                    var res = [];
-
-                    results.forEach(
-
-                        /**
-                         * @param {Model} result
-                         */
-                         function(result) {
-
-                            /**
-                             * @type {TaskDTO}
-                             */
-                            var dto = modelToDto(result);
-                            res.push(dto);
-                        }
-                    );
-
-                    resolve(res);
-
+                if (update.length) {
+                    _this.updateMany(update);
                 }
-            )
+                if (insert.length) {
+                    _this.createMany(insert);
+                }
+                resolve();
+            });
         });
     };
-
-    /**
-     * @param {TaskDTO[]} dtos
-     * @return {Promise<Array<Instance>>}
-     */
-    this.createMany = function(dtos) {
-
-        return model.bulkCreate(dtos);
-
+    TaskRepository.prototype.createMany = function (dtos) {
+        return this.getEntity().bulkCreate(dtos);
     };
-
-    /**
-     * @param {TaskDTO[]} dtos
-     * @return {Promise}
-     */
-    this.updateMany = function(dtos) {
-
-        return new Promise(function(resolve) {
-
+    ;
+    TaskRepository.prototype.updateMany = function (dtos) {
+        return new Promise(function (resolve) {
             var dtosConsumable = dtos.concat();
-
-            var consume = function() {
-
+            var consume = function () {
                 if (dtosConsumable.length) {
-
-                    /**
-                     * @type {TaskDTO}
-                     */
                     var dto = dtosConsumable.shift();
-
-                    model.update(
-                        dto,
-                        {
-                            where: {
-                                key: dto.key
-                            }
+                    this.getEntity().update(dto, {
+                        where: {
+                            key: dto.key
                         }
-                    ).then(
-                        function() {
-                            consume();
-                        }
-                    )
-                } else {
+                    }).then(function () {
+                        consume();
+                    });
+                }
+                else {
                     resolve([]);
                 }
-            }
+            };
+            consume();
         });
-    }
-}
-
-module.exports = TaskRepository;
+    };
+    TaskRepository.prototype.getEntity = function () {
+        return app.getEntity('Task');
+    };
+    return TaskRepository;
+})();
+exports.TaskRepository = TaskRepository;

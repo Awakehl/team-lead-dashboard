@@ -3,7 +3,7 @@
 import {UserTaskDTO} from "../dto/user-task-dto";
 import {AppService} from "../service/app-service";
 import {Model} from "sequelize";
-import {EntityConverterService} from "../service/entity-convertor-service";
+import {EntityConverterService} from "../service/entity-converter-service";
 
 declare var app: AppService;
 
@@ -19,7 +19,7 @@ export class UserTaskRepository {
 
                     for (let task of tasks) {
                         res.push(
-                            EntityConverterService.toUserTaskDTO(task)
+                            app.getEntityConverterService().toUserTaskDTO(task)
                         )
                     }
 

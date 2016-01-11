@@ -5,6 +5,9 @@ import {JiraTasksService} from "./jira-tasks-service";
 import {Model} from "sequelize";
 import {JiraTaskRepository} from "../repository/jira-task-repository";
 import {ImportTasksService} from "./import-tasks-service";
+import {EntityConverterService} from "./entity-converter-service";
+import {TaskRepository} from "../repository/task-repository";
+import {TaskService} from "./task-service";
 declare var tl: any;
 declare var _: any;
 
@@ -14,7 +17,7 @@ export class AppService {
 
 
     getEntity(entity: string):Model<string, any> {
-        return tl.Di.Container.getEntity;
+        return tl.Di.Container.getEntity(entity);
     }
 
     getConf(name: string): any {
@@ -33,12 +36,20 @@ export class AppService {
         return tl.Di.Container.getService('ImportTasksService');
     }
 
+    getEntityConverterService(): EntityConverterService {
+        return tl.Di.Container.getService('EntityConverterService');
+    }
+
     getJiraTaskRepository(): JiraTaskRepository {
         return tl.Di.Container.getRepository('JiraTaskRepository')
     };
 
-    getTaskRepository(): JiraTaskRepository {
-        return tl.Di.Container.getRepository('JiraTaskRepository')
+    getTaskRepository(): TaskRepository {
+        return tl.Di.Container.getRepository('TaskRepository')
+    };
+
+    getTaskService(): TaskService {
+        return tl.Di.Container.getService('TaskService')
     };
 
     getFramework(): any {

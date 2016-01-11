@@ -4,7 +4,8 @@ var Entities = function () {
     for (var entity in tl.Entity) {
         (function(e) {
             returnObj[e] = tl.Di.Container.share(function () {
-                return tl.Entity[e]();
+                var tmp =  tl.Entity[e][e];
+                return tmp();
             })
         })(entity)
     }

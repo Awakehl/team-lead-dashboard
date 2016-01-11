@@ -5,7 +5,7 @@ declare var app: AppService;
 
 export class JiraTasksService {
 
-    getTasks():Promise<Array<TaskDTO>> {
+    getTasks():Promise<TaskDTO[]> {
 
         return app.getJiraTaskRepository().getTasks();
     }

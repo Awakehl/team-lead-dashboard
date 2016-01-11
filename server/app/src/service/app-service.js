@@ -5,7 +5,7 @@ var AppService = (function () {
         this._ = require('lodash');
     }
     AppService.prototype.getEntity = function (entity) {
-        return tl.Di.Container.getEntity;
+        return tl.Di.Container.getEntity(entity);
     };
     AppService.prototype.getConf = function (name) {
         return tl.Conf[this._.capitalize(name)];
@@ -22,8 +22,19 @@ var AppService = (function () {
     AppService.prototype.getImportTasksService = function () {
         return tl.Di.Container.getService('ImportTasksService');
     };
+    AppService.prototype.getEntityConverterService = function () {
+        return tl.Di.Container.getService('EntityConverterService');
+    };
     AppService.prototype.getJiraTaskRepository = function () {
         return tl.Di.Container.getRepository('JiraTaskRepository');
+    };
+    ;
+    AppService.prototype.getTaskRepository = function () {
+        return tl.Di.Container.getRepository('TaskRepository');
+    };
+    ;
+    AppService.prototype.getTaskService = function () {
+        return tl.Di.Container.getService('TaskService');
     };
     ;
     AppService.prototype.getFramework = function () {

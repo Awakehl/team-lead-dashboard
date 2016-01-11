@@ -2,7 +2,12 @@ var ImportTasksService = (function () {
     function ImportTasksService() {
     }
     ImportTasksService.prototype.import = function () {
-        return app.getJiraTasksService().getTasks();
+        app.getJiraTasksService().getTasks().then(function (tasks) {
+            console.log(tasks);
+            app.getTaskService().importTasks(tasks).then(function () {
+                console.log('imported');
+            });
+        });
     };
     return ImportTasksService;
 })();

@@ -33,12 +33,16 @@ var Services = function () {
             return new tl.Service.ImportTasksService.ImportTasksService();
         }),
 
-        tasksService: tl.Di.Container.share(function() {
-            return new tl.Service.TasksService();
+        taskService: tl.Di.Container.share(function() {
+            return new tl.Service.TaskService.TaskService();
         }),
 
         jiraTasksService: tl.Di.Container.share(function() {
             return new tl.Service.JiraTasksService.JiraTasksService();
+        }),
+
+        entityConverterService: tl.Di.Container.share(function() {
+            return new tl.Service.EntityConverterService.EntityConverterService();
         })
     }
 

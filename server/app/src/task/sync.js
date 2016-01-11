@@ -8,7 +8,8 @@ program
     .version('0.0.1');
 
 for (var entity in tl.Entity) {
-    console.log(app.getEntity(entity));
+    var entity = app.getEntity(entity);
+    //console.log(app.getEntity(entity));
 }
 
 app.getFramework().sync().catch(function (e) {
