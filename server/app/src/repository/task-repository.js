@@ -21,7 +21,8 @@ var TaskRepository = (function () {
                 var insert = [];
                 for (var _a = 0; _a < tasks.length; _a++) {
                     task = tasks[_a];
-                    if (existing.hasOwnProperty(task.key) && task != existing[task.key]) {
+                    if (existing.hasOwnProperty(task.key)
+                        && !app.getEntityConverterService().isEquals(task, existing[task.key])) {
                         update.push(task);
                     }
                     else if (!existing.hasOwnProperty(task.key)) {
@@ -43,12 +44,13 @@ var TaskRepository = (function () {
     };
     ;
     TaskRepository.prototype.updateMany = function (dtos) {
+        var entity = this.getEntity();
         return new Promise(function (resolve) {
             var dtosConsumable = dtos.concat();
             var consume = function () {
                 if (dtosConsumable.length) {
                     var dto = dtosConsumable.shift();
-                    this.getEntity().update(dto, {
+                    entity.update(dto, {
                         where: {
                             key: dto.key
                         }

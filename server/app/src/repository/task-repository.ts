@@ -32,7 +32,10 @@ export class TaskRepository {
                     let insert:TaskDTO[] = [];
 
                     for (task of tasks) {
-                        if (existing.hasOwnProperty(task.key) && task != existing[task.key]) {
+                        if (
+                            existing.hasOwnProperty(task.key)
+                            && !app.getEntityConverterService().isEquals(task, existing[task.key]))
+                        {
                             update.push(task);
                         } else if(!existing.hasOwnProperty(task.key)) {
                             insert.push(task);
@@ -59,6 +62,8 @@ export class TaskRepository {
 
     private updateMany(dtos: TaskDTO[]): Promise<void> {
 
+        let entity: Model<string, any> = this.getEntity();
+
         return new Promise<void>(function(resolve: Function): void {
 
             var dtosConsumable = dtos.concat();
@@ -69,7 +74,7 @@ export class TaskRepository {
 
                     var dto: TaskDTO = dtosConsumable.shift();
 
-                    this.getEntity().update(
+                    entity.update(
                         dto,
                         {
                             where: {

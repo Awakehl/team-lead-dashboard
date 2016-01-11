@@ -22,5 +22,10 @@ export class EntityConverterService {
         );
     }
 
+    isEquals(modelOne: any, modelTwo: any): boolean {
+
+        return JSON.stringify(modelOne) == JSON.stringify(modelTwo);
+    }
+
 
 }
