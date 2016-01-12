@@ -1,14 +1,18 @@
-import {AppService} from "./app-service";
 import {TaskDTO} from "../dto/task-dto";
-declare var app: AppService;
+import {TaskRepository} from "../repository/task-repository";
 
 export class TaskService {
 
+    r: TaskRepository;
 
-    importTasks(tasks: TaskDTO[]):Promise<void> {
+    self = this;
 
-        return app.getTaskRepository().updateOrInsertTasks(tasks);
+    public constructor(repository: TaskRepository) {
+        this.self.r = repository;
+    }
 
+    importTasks(tasks: TaskDTO[]):Promise<TaskDTO[]> {
+        return this.self.r.updateOrInsertTasks(tasks);
     }
 
 }

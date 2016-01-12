@@ -32,10 +32,11 @@ var TaskRepository = (function () {
                 if (update.length) {
                     _this.updateMany(update);
                 }
-                if (insert.length) {
-                    _this.createMany(insert);
-                }
-                resolve();
+                _this.createMany(insert).then(function () {
+                    _this.updateMany(update).then(function () {
+                        resolve(tasks);
+                    });
+                });
             });
         });
     };

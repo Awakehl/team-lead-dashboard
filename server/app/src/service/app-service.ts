@@ -8,6 +8,8 @@ import {ImportTasksService} from "./import-tasks-service";
 import {EntityConverterService} from "./entity-converter-service";
 import {TaskRepository} from "../repository/task-repository";
 import {TaskService} from "./task-service";
+import {UserRepository} from "../repository/user-repository";
+import {UserService} from "./user-service";
 declare var tl: any;
 declare var _: any;
 
@@ -47,6 +49,15 @@ export class AppService {
     getTaskRepository(): TaskRepository {
         return tl.Di.Container.getRepository('TaskRepository')
     };
+
+    getUserRepository(): UserRepository {
+        return tl.Di.Container.getRepository('UserRepository')
+    };
+
+    getUserService(): UserService {
+        return tl.Di.Container.getService('UserService')
+    };
+
 
     getTaskService(): TaskService {
         return tl.Di.Container.getService('TaskService')

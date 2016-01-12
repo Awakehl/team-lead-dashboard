@@ -1,5 +1,6 @@
 import {UserTaskDTO} from "../dto/user-task-dto";
 import {TaskDTO} from "../dto/task-dto";
+import {UserDTO} from "../dto/user-dto";
 
 export class EntityConverterService {
 
@@ -19,6 +20,14 @@ export class EntityConverterService {
         return new UserTaskDTO(
             model['key'],
             model['userId']
+        );
+    }
+
+    toUserDTO(model: any): UserDTO {
+
+        return new UserDTO(
+            model['id'],
+            model['name']
         );
     }
 

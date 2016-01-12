@@ -8,9 +8,9 @@ declare var app: AppService;
 
 export class TaskRepository {
 
-    public updateOrInsertTasks(tasks:TaskDTO[]):Promise<void> {
+    public updateOrInsertTasks(tasks:TaskDTO[]):Promise<TaskDTO[]> {
 
-        return new Promise<void>((resolve) => {
+        return new Promise<TaskDTO[]>((resolve) => {
 
             let keys: String[] = [];
             let task:TaskDTO;
@@ -45,10 +45,11 @@ export class TaskRepository {
                     if (update.length) {
                         this.updateMany(update);
                     }
-                    if (insert.length) {
-                        this.createMany(insert);
-                    }
-                    resolve();
+                    this.createMany(insert).then((): void => {
+                        this.updateMany(update).then((): void => {
+                            resolve(tasks);
+                        })
+                    });
                 }
             );
         });
@@ -89,7 +90,7 @@ export class TaskRepository {
                 } else {
                     resolve([]);
                 }
-            }
+            };
             consume();
         });
     }

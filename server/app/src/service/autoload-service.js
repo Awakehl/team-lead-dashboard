@@ -27,7 +27,7 @@ var AutoloadService = (function () {
                 exports[namespace] = {};
 
                 require("fs").readdirSync(normalizedPath).forEach(function(file) {
-                    if (file.indexOf('.js') !== -1) {
+                    if ((new RegExp('\.js$')).test(file)) {
                         exports[namespace][
                             _.capitalize(
                                 _.camelCase(

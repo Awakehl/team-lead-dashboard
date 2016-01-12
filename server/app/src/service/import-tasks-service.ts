@@ -1,28 +1,30 @@
-import {AppService} from "./app-service";
 import {TaskDTO} from "../dto/task-dto";
-
-declare var app: AppService;
+import {TaskService} from "./task-service";
+import {UserService} from "./user-service";
+import {JiraTasksService} from "./jira-tasks-service";
 
 export class ImportTasksService {
 
-    import(): void {
+    private jiraTaskService: JiraTasksService;
+    private taskService: TaskService;
+    private userService: UserService;
 
-       app.getJiraTasksService().getTasks().then(function(tasks: TaskDTO[]): void {
-           console.log(tasks);
-
-           app.getTaskService().importTasks(tasks).then(function () {
-
-               console.log('imported');
-           });
-
-
-       });
-
-
+    constructor(jiraTaskService: JiraTasksService, taskService: TaskService, userService: UserService) {
+        this.jiraTaskService = jiraTaskService;
+        this.taskService = taskService;
+        this.userService = userService;
     }
 
-    /*private syncTasks(TaskDTO[]): void {
+    import(): void {
 
-    }*/
+       this.jiraTaskService
+           .getTasks()
+           .then((tasks: TaskDTO[]): Promise<TaskDTO[]> => {
+               return this.taskService.importTasks(tasks);
+           })
+           .then((tasks: TaskDTO[]): Promise<void> => {
+               return this.userService.importUsersFromTasks(tasks);
+           })
 
+    }
 }
