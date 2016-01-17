@@ -12,20 +12,20 @@ export class TaskRepository {
 
         return new Promise<TaskDTO[]>((resolve) => {
 
-            let keys: String[] = [];
+            let ids: number[] = [];
             let task:TaskDTO;
             for (task of tasks) {
-                keys.push(task.key);
+                ids.push(task.id);
             }
 
-            this.getEntity().findAll({where: {key: {$in: keys}}}).then(
+            this.getEntity().findAll({where: {id: {$in: ids}}}).then(
                 (dbTasks: string[]): void => {
 
                     let existing: any = {};
 
                     for (let dbTask of dbTasks) {
                         task = app.getEntityConverterService().toTaskDTO(dbTask);
-                        existing[task.key] = task;
+                        existing[task.id] = task;
                     }
 
                     let update:TaskDTO[] = [];
@@ -33,11 +33,11 @@ export class TaskRepository {
 
                     for (task of tasks) {
                         if (
-                            existing.hasOwnProperty(task.key)
-                            && !app.getEntityConverterService().isEquals(task, existing[task.key]))
+                            existing.hasOwnProperty(task.id)
+                            && !app.getEntityConverterService().isEquals(task, existing[task.id]))
                         {
                             update.push(task);
-                        } else if(!existing.hasOwnProperty(task.key)) {
+                        } else if(!existing.hasOwnProperty(task.id)) {
                             insert.push(task);
                         }
                     }
@@ -79,7 +79,7 @@ export class TaskRepository {
                         dto,
                         {
                             where: {
-                                key: dto.key
+                                id: dto.id
                             }
                         }
                     ).then(

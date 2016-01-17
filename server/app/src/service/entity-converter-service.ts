@@ -7,6 +7,7 @@ export class EntityConverterService {
     toTaskDTO(model: any): TaskDTO {
 
         return new TaskDTO(
+            model['id'],
             model['key'],
             model['assignee'],
             model['estimation'],

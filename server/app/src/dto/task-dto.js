@@ -1,5 +1,6 @@
 var TaskDTO = (function () {
-    function TaskDTO(key, assignee, estimation, summary, status) {
+    function TaskDTO(id, key, assignee, estimation, summary, status) {
+        this.id = id;
         this.key = key;
         this.assignee = assignee;
         this.estimation = estimation;

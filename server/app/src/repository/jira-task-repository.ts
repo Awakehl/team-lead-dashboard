@@ -60,9 +60,10 @@ export class JiraTaskRepository {
         var issues = [];
         issuesObj.forEach(function(issue) {
             var dto: TaskDTO = new TaskDTO(
+                +issue.id,
                 issue.key,
                 issue.fields.assignee ? issue.fields.assignee.name : null,
-                issue.fields.customfield_10004,
+                +issue.fields.customfield_10004,
                 issue.fields.summary,
                 issue.fields.status.name
             );

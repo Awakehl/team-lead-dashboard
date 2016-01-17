@@ -45,6 +45,14 @@ var AppService = (function () {
         return tl.Di.Container.getService('TaskService');
     };
     ;
+    AppService.prototype.getUserTaskRepository = function () {
+        return tl.Di.Container.getRepository('UserTaskRepository');
+    };
+    ;
+    AppService.prototype.getUserTaskService = function () {
+        return tl.Di.Container.getService('UserTaskService');
+    };
+    ;
     AppService.prototype.getFramework = function () {
         return tl.Di.Container.getFramework();
     };
