@@ -4,6 +4,7 @@ import {AppService} from "../service/app-service";
 import {Model} from "sequelize";
 import {EntityConverterService} from "../service/entity-converter-service";
 import {UserDTO} from "../dto/user-dto";
+import Promise = require('bluebird');
 
 declare var app: AppService;
 

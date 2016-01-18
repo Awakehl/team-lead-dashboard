@@ -22,7 +22,9 @@
         "typescript": "*",
         "grunt-cli": "",
         "grunt-typescript": "",
-        "grunt-contrib-jshint": ""
+        "grunt-contrib-jshint": "",
+        "bluebird": "",
+        "moment": ""
     },
     "devDependencies": {
 

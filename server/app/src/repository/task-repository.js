@@ -1,3 +1,4 @@
+var Promise = require('bluebird');
 var TaskRepository = (function () {
     function TaskRepository() {
     }

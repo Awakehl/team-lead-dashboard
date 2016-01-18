@@ -5,7 +5,7 @@ export class UserTaskService {
 
         let key: string;
 
-        for (key of tasksKeys) {
+        for (task of tasks) {
 
         }
     }

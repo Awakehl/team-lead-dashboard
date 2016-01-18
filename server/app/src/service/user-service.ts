@@ -1,6 +1,7 @@
 import {TaskDTO} from "../dto/task-dto";
 import {UserDTO} from "../dto/user-dto";
 import {UserRepository} from "../repository/user-repository";
+import Promise = require('bluebird');
 
 export class UserService {
 

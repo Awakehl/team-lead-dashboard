@@ -1,4 +1,5 @@
 /// <reference path="../../../typings/bluebird/bluebird.d.ts"/>
+var Promise = require('bluebird');
 var UserRepository = (function () {
     function UserRepository() {
     }

@@ -1,11 +1,15 @@
 /// <reference path="./../../../typings/node/node.d.ts" />
 /// <reference path="./../../../typings/bluebird/bluebird.d.ts" />
 /// <reference path="./../../../typings/sequelize/sequelize.d.ts" />
+/// <reference path="./../../../typings/moment/moment.d.ts" />
 
 import {TaskDTO} from "../dto/task-dto";
 import {AppService} from "../service/app-service";
 import http = require('http');
 import https = require('https');
+import Promise = require('bluebird');
+import moment = require('moment');
+import {ClientResponse} from "http";
 
 declare var app: AppService;
 
@@ -16,20 +20,13 @@ export class JiraTaskRepository {
     getTasks(): Promise<TaskDTO[]> {
 
         return new Promise<TaskDTO[]>((resolve: Function, reject: Function):void => {
-            var options = {
-                hostname: this.config.host,
-                port: this.config.port,
-                path: encodeURI(this.config.tasks_url.replace('__DATETIME__', app.getService('dateService')
-                    .getDateInJiraFormat())),
-                method: 'GET',
-                auth: this.config.login + ':' + this.config.password
-            };
-
             var self = this;
             let requester = require(this.config['protocol']);
-            var req = requester.request(options, function (res) {
+            let url: string = this.config['protocol']+'://'+this.config['login']+':'+this.config['password']+'@'
+                +this.config['host']
+                +this.config['tasks_url'].replace('__DATETIME__', moment().subtract(1, 'months').format('YYYY-MM-DD'));
+            var req = requester.get(url, (res: ClientResponse) => {
                 var body:string = '';
-                res.setEncoding('utf8');
                 res.on('data', function (d) {
                     body += d.toString();
                 });
@@ -39,7 +36,7 @@ export class JiraTaskRepository {
                         var obj = JSON.parse(body);
                         issues = self.parseIssues(obj.issues);
                     } catch (e) {
-                        console.error('Jira error: ' + e, 'options', options);
+                        console.error('Jira error: ' + e);
                     }
 
                     resolve(issues);
