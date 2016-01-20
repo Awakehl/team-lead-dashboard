@@ -92,7 +92,6 @@ var UserTaskRepository = (function (_super) {
                             resolve(tasks);
                         });
                     });
-                    resolve(tasks);
                 });
             });
         });

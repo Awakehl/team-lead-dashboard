@@ -115,7 +115,6 @@ export class UserTaskRepository extends AbstractRepository {
                                 resolve(tasks);
                             })
                         });
-                        resolve(tasks);
                     }
                 );
             });
