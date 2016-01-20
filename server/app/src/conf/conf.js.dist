@@ -1,5 +1,5 @@
 var conf = {
-    connectString: 'mysql://root:@localhost/team-lead-dashboard'
+    connectString: 'mysql://root:@localhost/team_lead_dashboard'
 }
 
 module.exports = conf;

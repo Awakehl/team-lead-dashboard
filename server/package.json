@@ -17,7 +17,7 @@
         "sequelize": "*",
         "mysql": "*",
         "commander": "*",
-        "lodash": "*",
+        "lodash": "3.*",
         "path": "*",
         "typescript": "*",
         "grunt-cli": "",
