@@ -62,34 +62,37 @@ export class UserTaskRepository extends AbstractRepository {
                             startTime= userTask ? null : now;
                             endTime = task.isCompleted() || task.isPaused() ? now : null;
 
-                            console.log('Task '+task.key);
+                            let log = 'Task '+task.key;
 
                             if (userTask) {
                                 if (endTime) {
                                     // finished task
                                     userTask.endTime = endTime;
                                     update.push(app.getEntityConverterService().toUserTaskDbObject(userTask));
-                                    console.log('\tfinished');
-                                } else if (user.id != userTask.userId) {
+                                    console.log(log + '\tfinished');
+                                } else if (!user || user.id != userTask.userId) {
                                     // assignee changed on task inprogress
                                     // close on current user
                                     userTask.endTime = now;
-                                    update.push(userTask);
+                                    update.push(app.getEntityConverterService().toUserTaskDbObject(userTask));
+                                    console.log(log + '\tclosed reassigned task');
                                     // open on new user
-                                    insert.push(app.getEntityConverterService().toUserTaskDbObject(new UserTaskDTO(
-                                        null,
-                                        userTask.taskId,
-                                        user.id,
-                                        now,
-                                        null
-                                    )));
-                                    console.log('\treassigned');
+                                    if (user) {
+                                        insert.push(app.getEntityConverterService().toUserTaskDbObject(new UserTaskDTO(
+                                            null,
+                                            userTask.taskId,
+                                            user.id,
+                                            now,
+                                            null
+                                        )));
+                                        console.log(log + '\t new task on new user');
+                                    }
                                 } else {
-                                    console.log('\tno change');
+                                    //console.log(log + '\tno change');
                                 }
                             } else if(user) {
                                 if (endTime) {
-                                    console.log('\tassigned but finished - ignoring');
+                                    //console.log(log + '\tassigned but finished - ignoring');
                                 } else {
                                     // new assigned task (not finished yet)
                                     insert.push(app.getEntityConverterService().toUserTaskDbObject(new UserTaskDTO(
@@ -99,11 +102,11 @@ export class UserTaskRepository extends AbstractRepository {
                                         now,
                                         null
                                     )));
-                                    console.log('\tnew task');
+                                    console.log(log + '\tnew task');
                                 }
                             } else {
                                 // not assigned
-                                console.log('\tnot assigned - ignoring');
+                                //console.log('\tnot assigned - ignoring');
                             }
                         }
 

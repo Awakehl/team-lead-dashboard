@@ -44,9 +44,6 @@ export class TaskRepository extends AbstractRepository {
                         }
                     }
 
-                    if (update.length) {
-                        this.updateMany(update);
-                    }
                     this.createMany(insert).then((): void => {
                         this.updateMany(update).then((): void => {
                             resolve(tasks);

@@ -38,9 +38,6 @@ var TaskRepository = (function (_super) {
                         insert.push(task);
                     }
                 }
-                if (update.length) {
-                    _this.updateMany(update);
-                }
                 _this.createMany(insert).then(function () {
                     _this.updateMany(update).then(function () {
                         resolve(tasks);
