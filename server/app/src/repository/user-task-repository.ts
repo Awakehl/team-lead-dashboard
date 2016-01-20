@@ -62,7 +62,7 @@ export class UserTaskRepository extends AbstractRepository {
                             startTime= userTask ? null : now;
                             endTime = task.isCompleted() || task.isPaused() ? now : null;
 
-                            let log = 'Task '+task.key;
+                            let log = '['+now+']['+task.key+']';
 
                             if (userTask) {
                                 if (endTime) {
@@ -85,7 +85,7 @@ export class UserTaskRepository extends AbstractRepository {
                                             now,
                                             null
                                         )));
-                                        console.log(log + '\t new task on new user');
+                                        console.log(log + '\t new task on ' + user.name);
                                     }
                                 } else {
                                     //console.log(log + '\tno change');
@@ -102,7 +102,7 @@ export class UserTaskRepository extends AbstractRepository {
                                         now,
                                         null
                                     )));
-                                    console.log(log + '\tnew task');
+                                    console.log(log + '\tnew task on ' + user.name);
                                 }
                             } else {
                                 // not assigned

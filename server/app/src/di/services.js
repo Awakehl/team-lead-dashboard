@@ -5,7 +5,7 @@ var Services = function () {
         framework: tl.Di.Container.share(function() {
             var Sequelize = require("sequelize");
 
-            return tl.Framework.SequelizeFramework(new Sequelize(tl.Conf.Conf.connectString, {}), Sequelize);
+            return tl.Framework.SequelizeFramework(new Sequelize(tl.Conf.Conf.connectString, {logging: false}), Sequelize);
         }),
 
         appService: tl.Di.Container.share(function() {

@@ -15,4 +15,4 @@ var SequelizeFramework = function(framework, definition) {
     return o;
 };
 
-module.exports = SequelizeFramework
+module.exports = SequelizeFramework;
