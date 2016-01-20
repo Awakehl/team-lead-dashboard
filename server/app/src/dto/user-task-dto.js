@@ -1,6 +1,7 @@
 var UserTaskDTO = (function () {
-    function UserTaskDTO(key, userId, startTime, endTime) {
-        this.key = key;
+    function UserTaskDTO(id, taskId, userId, startTime, endTime) {
+        this.id = id;
+        this.taskId = taskId;
         this.userId = userId;
         this.startTime = startTime;
         this.endTime = endTime;

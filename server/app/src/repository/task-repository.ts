@@ -4,10 +4,11 @@ import {Model} from "sequelize";
 import {EntityConverterService} from "../service/entity-converter-service";
 import {TaskDTO} from "../dto/task-dto";
 import Promise = require('bluebird');
+import {AbstractRepository} from "./abstract-repository";
 
 declare var app: AppService;
 
-export class TaskRepository {
+export class TaskRepository extends AbstractRepository {
 
     public updateOrInsertTasks(tasks:TaskDTO[]):Promise<TaskDTO[]> {
 
@@ -56,47 +57,7 @@ export class TaskRepository {
         });
     }
 
-    private createMany(dtos:TaskDTO[]): Promise<string[]> {
-
-        return this.getEntity().bulkCreate(dtos);
-
-    };
-
-    private updateMany(dtos: TaskDTO[]): Promise<void> {
-
-        let entity: Model<string, any> = this.getEntity();
-
-        return new Promise<void>(function(resolve: Function): void {
-
-            var dtosConsumable = dtos.concat();
-
-            var consume: Function = function(): void {
-
-                if (dtosConsumable.length) {
-
-                    var dto: TaskDTO = dtosConsumable.shift();
-
-                    entity.update(
-                        dto,
-                        {
-                            where: {
-                                id: dto.id
-                            }
-                        }
-                    ).then(
-                        function() {
-                            consume();
-                        }
-                    )
-                } else {
-                    resolve([]);
-                }
-            };
-            consume();
-        });
-    }
-
-    private getEntity(): Model<string, any> {
+    protected getEntity(): Model<string, any> {
         return app.getEntity('Task');
     }
 }

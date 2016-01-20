@@ -11,9 +11,9 @@ export class UserService {
         this.repository = repository;
     }
 
-    public importUsersFromTasks(tasks: TaskDTO[]): Promise<void> {
+    public importUsersFromTasks(tasks: TaskDTO[]): Promise<TaskDTO[]> {
 
-        return new Promise<void>((resolve: Function) => {
+        return new Promise<TaskDTO[]>((resolve: Function) => {
 
             let existing:any = {};
             let user: UserDTO;
@@ -37,10 +37,10 @@ export class UserService {
 
                     if (insert.length) {
                         this.repository.createMany(insert).then((): void => {
-                            resolve();
+                            resolve(tasks);
                         })
                     } else {
-                        resolve();
+                        resolve(tasks);
                     }
                 }
             );

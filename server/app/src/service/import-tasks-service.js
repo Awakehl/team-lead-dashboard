@@ -1,18 +1,22 @@
 var ImportTasksService = (function () {
-    function ImportTasksService(jiraTaskService, taskService, userService) {
+    function ImportTasksService(jiraTaskService, taskService, userService, userTaskService) {
         this.jiraTaskService = jiraTaskService;
         this.taskService = taskService;
         this.userService = userService;
+        this.userTaskService = userTaskService;
     }
     ImportTasksService.prototype.import = function () {
         var _this = this;
-        this.jiraTaskService
+        return this.jiraTaskService
             .getTasks()
             .then(function (tasks) {
             return _this.taskService.importTasks(tasks);
         })
             .then(function (tasks) {
             return _this.userService.importUsersFromTasks(tasks);
+        })
+            .then(function (tasks) {
+            return _this.userTaskService.update(tasks);
         });
     };
     return ImportTasksService;

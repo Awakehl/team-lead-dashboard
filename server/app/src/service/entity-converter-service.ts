@@ -19,9 +19,23 @@ export class EntityConverterService {
     toUserTaskDTO(model: any): UserTaskDTO {
 
         return new UserTaskDTO(
-            model['key'],
-            model['userId']
+            model['id'],
+            model['task_id'],
+            model['user_id'],
+            model['start_time'],
+            model['end_time']
         );
+    }
+
+    toUserTaskDbObject(entity: UserTaskDTO): any {
+
+        return {
+            id: entity.id,
+            task_id: entity.taskId,
+            user_id: entity.userId,
+            start_time: entity.startTime,
+            end_time: entity.endTime
+        };
     }
 
     toUserDTO(model: any): UserDTO {

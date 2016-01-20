@@ -1,12 +1,15 @@
 import {TaskDTO} from "../dto/task-dto";
+import {UserTaskRepository} from "../repository/user-task-repository";
 export class UserTaskService {
 
-    update(tasks: TaskDTO[]): void {
+    private repository: UserTaskRepository;
 
-        let key: string;
+    public constructor(repository: UserTaskRepository) {
+        this.repository = repository;
+    }
 
-        for (task of tasks) {
+    update(tasks: TaskDTO[]): Promise<TaskDTO[]> {
 
-        }
+        return this.repository.update(tasks);
     }
 }
