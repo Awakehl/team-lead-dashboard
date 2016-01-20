@@ -46,7 +46,6 @@ var Container = (function () {
         },
         getRepository: function(name) {
 
-            console.log('Get repo: '+name);
             if (!tl.Repository.hasOwnProperty(name)) {
                 console.log(name, '->', tl.Repository[name]);
                 console.error('Available repositories:', tl.Repository);

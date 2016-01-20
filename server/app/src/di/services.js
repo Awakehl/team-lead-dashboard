@@ -30,7 +30,12 @@ var Services = function () {
         }),
 
         importTasksService: tl.Di.Container.share(function() {
-            return new tl.Service.ImportTasksService.ImportTasksService(app.getJiraTasksService(), app.getTaskService(), app.getUserService());
+            return new tl.Service.ImportTasksService.ImportTasksService(
+                app.getJiraTasksService(),
+                app.getTaskService(),
+                app.getUserService(),
+                app.getUserTaskService()
+            );
         }),
 
         taskService: tl.Di.Container.share(function() {
@@ -46,7 +51,7 @@ var Services = function () {
         }),
 
         userTaskService: tl.Di.Container.share(function() {
-            return new tl.Service.UserService.UserService(app.getUserTaskRepository());
+            return new tl.Service.UserTaskService.UserTaskService(app.getUserTaskRepository());
         }),
 
         entityConverterService: tl.Di.Container.share(function() {

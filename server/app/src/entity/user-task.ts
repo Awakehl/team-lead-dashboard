@@ -21,8 +21,13 @@ export class UserTask {
                 }
             },
 
-            startTime: app.getFramework().definition.DATE,
-            endTime: app.getFramework().definition.DATE
+            start_time: {
+                type: app.getFramework().definition.DATE
+            },
+
+            end_time: {
+                type: app.getFramework().definition.DATE
+            },
         });
     }
 

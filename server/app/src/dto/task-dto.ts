@@ -14,4 +14,12 @@ export class TaskDTO {
         this.summary = summary;
         this.status = status;
     }
+
+    isCompleted(): boolean {
+        return -1 !== ['work done', 'verified', 'rc verified', 'live'].indexOf(this.status.toLowerCase())
+    }
+
+    isPaused(): boolean {
+        return -1 !== ['on hold (dev)'].indexOf(this.status.toLowerCase())
+    }
 }

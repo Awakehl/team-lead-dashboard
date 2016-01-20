@@ -1,6 +1,14 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Promise = require('bluebird');
-var TaskRepository = (function () {
+var abstract_repository_1 = require("./abstract-repository");
+var TaskRepository = (function (_super) {
+    __extends(TaskRepository, _super);
     function TaskRepository() {
+        _super.apply(this, arguments);
     }
     TaskRepository.prototype.updateOrInsertTasks = function (tasks) {
         var _this = this;
@@ -41,35 +49,9 @@ var TaskRepository = (function () {
             });
         });
     };
-    TaskRepository.prototype.createMany = function (dtos) {
-        return this.getEntity().bulkCreate(dtos);
-    };
-    ;
-    TaskRepository.prototype.updateMany = function (dtos) {
-        var entity = this.getEntity();
-        return new Promise(function (resolve) {
-            var dtosConsumable = dtos.concat();
-            var consume = function () {
-                if (dtosConsumable.length) {
-                    var dto = dtosConsumable.shift();
-                    entity.update(dto, {
-                        where: {
-                            id: dto.id
-                        }
-                    }).then(function () {
-                        consume();
-                    });
-                }
-                else {
-                    resolve([]);
-                }
-            };
-            consume();
-        });
-    };
     TaskRepository.prototype.getEntity = function () {
         return app.getEntity('Task');
     };
     return TaskRepository;
-})();
+})(abstract_repository_1.AbstractRepository);
 exports.TaskRepository = TaskRepository;
