@@ -1,0 +1,1 @@
+{"version":3,"file":"jira-tasks-service.js","sourceRoot":"","sources":["jira-tasks-service.ts"],"names":["JiraTasksService","JiraTasksService.constructor","JiraTasksService.getTasks"],"mappings":"AAKA;IAAAA;IAMAC,CAACA;IAJGD,mCAAQA,GAARA;QAEIE,MAAMA,CAACA,GAAGA,CAACA,qBAAqBA,EAAEA,CAACA,QAAQA,EAAEA,CAACA;IAClDA,CAACA;IACLF,uBAACA;AAADA,CAACA,AAND,IAMC;AANY,wBAAgB,mBAM5B,CAAA"}
