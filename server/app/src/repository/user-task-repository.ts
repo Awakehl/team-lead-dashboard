@@ -60,7 +60,7 @@ export class UserTaskRepository extends AbstractRepository {
                             user = usersByName[task.assignee];
 
                             startTime= userTask ? null : now;
-                            endTime = task.isCompleted() || task.isPaused() ? now : null;
+                            endTime = task.inProgress() ? null : now;
 
                             let log = '['+now+']['+task.key+']';
 

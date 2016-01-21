@@ -51,7 +51,7 @@ var UserTaskRepository = (function (_super) {
                         userTask = existing.hasOwnProperty(task.id) ? existing[task.id] : null;
                         user = usersByName[task.assignee];
                         startTime = userTask ? null : now;
-                        endTime = task.isCompleted() || task.isPaused() ? now : null;
+                        endTime = task.inProgress() ? null : now;
                         var log = '[' + now + '][' + task.key + ']';
                         if (userTask) {
                             if (endTime) {

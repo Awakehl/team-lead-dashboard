@@ -15,6 +15,10 @@ export class TaskDTO {
         this.status = status;
     }
 
+    inProgress(): boolean {
+        return -1 !== ['dev in progress'].indexOf(this.status.toLowerCase())
+    }
+
     isCompleted(): boolean {
         return -1 !== ['work done', 'verified', 'rc verified', 'live'].indexOf(this.status.toLowerCase())
     }
