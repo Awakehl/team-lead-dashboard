@@ -1,0 +1,12 @@
+<div class="container-fluid">
+    <div class="row" >
+
+        <div ng-repeat="(name, user) in data" class="pull-left panel panel-primary offset3">
+
+            <div class="panel-heading">{{ name }}</div>
+            <div class="panel-body">
+                <div ng-repeat="task in user['dev in progress']">{{ task.summary }}</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -54,6 +54,26 @@ export class TaskRepository extends AbstractRepository {
         });
     }
 
+    public getByIds(ids: number[]): Promise<TaskDTO[]> {
+
+        return new Promise<TaskDTO[]>((resolve: Function): void => {
+
+            this.getEntity().findAll({where: {id: {$in: ids}}}).then(
+                (dbTasks: string[]): void => {
+
+                    let result: TaskDTO[] = [];
+
+                    for (let dbTask of dbTasks) {
+                        result.push(app.getEntityConverterService().toTaskDTO(dbTask));
+                    }
+
+                    resolve(result);
+                }
+
+            )
+        })
+    }
+
     protected getEntity(): Model<string, any> {
         return app.getEntity('Task');
     }

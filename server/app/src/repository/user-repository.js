@@ -20,6 +20,19 @@ var UserRepository = (function () {
         return this.getEntity().bulkCreate(dtos);
     };
     ;
+    UserRepository.prototype.getAll = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.getEntity().findAll().then(function (dbUsers) {
+                var result = [];
+                for (var _i = 0; _i < dbUsers.length; _i++) {
+                    var dbUser = dbUsers[_i];
+                    result.push(app.getEntityConverterService().toUserDTO(dbUser));
+                }
+                resolve(result);
+            });
+        });
+    };
     UserRepository.prototype.getEntity = function () {
         return app.getEntity('User');
     };

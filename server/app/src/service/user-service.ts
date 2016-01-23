@@ -28,7 +28,7 @@ export class UserService {
                     }
 
                     for (task of tasks) {
-                        if (!existing.hasOwnProperty(task.assignee)) {
+                        if (task.assignee && !existing.hasOwnProperty(task.assignee)) {
                             let dto: UserDTO = new UserDTO(null, task.assignee);
                             insert.push(dto);
                             existing[task.assignee] = dto;
@@ -45,5 +45,9 @@ export class UserService {
                 }
             );
         });
+    }
+
+    getAll(): Promise<UserDTO[]> {
+        return this.repository.getAll();
     }
 }

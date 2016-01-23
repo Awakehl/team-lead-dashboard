@@ -29,6 +29,26 @@ export class UserRepository {
         return this.getEntity().bulkCreate(dtos);
     };
 
+    public getAll(): Promise<UserDTO[]> {
+
+        return new Promise<UserDTO[]>((resolve: Function): void => {
+
+            this.getEntity().findAll().then(
+                (dbUsers: string[]): void => {
+
+                    let result: UserDTO[] = [];
+
+                    for (let dbUser of dbUsers) {
+                        result.push(app.getEntityConverterService().toUserDTO(dbUser));
+                    }
+
+                    resolve(result);
+                }
+
+            )
+        })
+    }
+
     private getEntity(): Model<string, any> {
         return app.getEntity('User');
     }

@@ -24,13 +24,15 @@
         "grunt-typescript": "",
         "grunt-contrib-jshint": "",
         "bluebird": "",
-        "moment": ""
+        "moment": "",
+        "express": ""
     },
     "devDependencies": {
 
 	},
     "scripts": {
         "sync": "node app/src/task/sync.js",
-        "import": "node app/src/task/import.js"
+        "import": "node app/src/task/import.js",
+        "server": "node app/src/task/server.js"
     }
 }

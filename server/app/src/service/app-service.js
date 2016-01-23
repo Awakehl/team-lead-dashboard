@@ -56,6 +56,9 @@ var AppService = (function () {
     AppService.prototype.getFramework = function () {
         return tl.Di.Container.getFramework();
     };
+    AppService.prototype.getTaskReportService = function () {
+        return tl.Di.Container.getService('TaskReportService');
+    };
     return AppService;
 })();
 exports.AppService = AppService;

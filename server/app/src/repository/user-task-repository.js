@@ -96,6 +96,25 @@ var UserTaskRepository = (function (_super) {
             });
         });
     };
+    UserTaskRepository.prototype.getByDate = function (from) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            var sqlFrom = from.format('YYYY-MM-DD HH:mm:ss');
+            _this.getEntity().findAll({ where: {
+                    $or: [
+                        { start_time: { $gte: sqlFrom } },
+                        { end_time: { $gte: sqlFrom } }
+                    ]
+                } }).then(function (dbUserTasks) {
+                var result = [];
+                for (var _i = 0; _i < dbUserTasks.length; _i++) {
+                    var dbUserTask = dbUserTasks[_i];
+                    result.push(app.getEntityConverterService().toUserTaskDTO(dbUserTask));
+                }
+                resolve(result);
+            });
+        });
+    };
     UserTaskRepository.prototype.getEntity = function () {
         return app.getEntity('UserTask');
     };

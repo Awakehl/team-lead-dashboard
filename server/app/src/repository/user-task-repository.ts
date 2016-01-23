@@ -10,6 +10,7 @@ import moment = require('moment');
 import {TaskDTO} from "../dto/task-dto";
 import {UserDTO} from "../dto/user-dto";
 import {AbstractRepository} from "./abstract-repository";
+import Moment = moment.Moment;
 
 declare var app: AppService;
 
@@ -121,6 +122,33 @@ export class UserTaskRepository extends AbstractRepository {
 
 
         });
+    }
+
+    public getByDate(from: Moment): Promise<UserTaskDTO[]> {
+
+        return new Promise<UserTaskDTO[]>((resolve: Function): void => {
+
+            let sqlFrom: string = from.format('YYYY-MM-DD HH:mm:ss');
+            this.getEntity().findAll({where:{
+                $or:[
+                    {start_time: {$gte: sqlFrom }},
+                    {end_time: {$gte: sqlFrom }}
+                ]
+            }}).then(
+                (dbUserTasks: string[]): void => {
+
+                    let result: UserTaskDTO[] = [];
+
+                    for (let dbUserTask of dbUserTasks) {
+                        result.push(app.getEntityConverterService().toUserTaskDTO(dbUserTask));
+                    }
+
+                    resolve(result);
+                }
+
+            )
+        })
+
     }
 
     protected getEntity(): Model<string, any> {

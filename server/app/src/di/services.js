@@ -56,6 +56,14 @@ var Services = function () {
 
         entityConverterService: tl.Di.Container.share(function() {
             return new tl.Service.EntityConverterService.EntityConverterService();
+        }),
+
+        taskReportService: tl.Di.Container.share(function() {
+            return new tl.Service.TaskReportService.TaskReportService(
+                app.getTaskService(),
+                app.getUserTaskService(),
+                app.getUserService()
+            );
         })
     }
 

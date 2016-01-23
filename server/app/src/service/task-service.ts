@@ -3,16 +3,18 @@ import {TaskRepository} from "../repository/task-repository";
 
 export class TaskService {
 
-    r: TaskRepository;
-
-    self = this;
+    private repository: TaskRepository;
 
     public constructor(repository: TaskRepository) {
-        this.self.r = repository;
+        this.repository = repository;
     }
 
     importTasks(tasks: TaskDTO[]):Promise<TaskDTO[]> {
-        return this.self.r.updateOrInsertTasks(tasks);
+        return this.repository.updateOrInsertTasks(tasks);
+    }
+
+    getByIds(ids: number[] = []): Promise<TaskDTO[]> {
+        return this.repository.getByIds(ids);
     }
 
 }

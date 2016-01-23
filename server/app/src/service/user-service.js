@@ -18,7 +18,7 @@ var UserService = (function () {
                 }
                 for (var _a = 0; _a < tasks.length; _a++) {
                     task = tasks[_a];
-                    if (!existing.hasOwnProperty(task.assignee)) {
+                    if (task.assignee && !existing.hasOwnProperty(task.assignee)) {
                         var dto = new user_dto_1.UserDTO(null, task.assignee);
                         insert.push(dto);
                         existing[task.assignee] = dto;
@@ -34,6 +34,9 @@ var UserService = (function () {
                 }
             });
         });
+    };
+    UserService.prototype.getAll = function () {
+        return this.repository.getAll();
     };
     return UserService;
 })();

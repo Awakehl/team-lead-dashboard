@@ -12,6 +12,7 @@ import {UserRepository} from "../repository/user-repository";
 import {UserService} from "./user-service";
 import {UserTaskRepository} from "../repository/user-task-repository";
 import {UserTaskService} from "./user-task-service";
+import {TaskReportService} from "./task-report-service";
 declare var tl: any;
 declare var _: any;
 
@@ -75,5 +76,9 @@ export class AppService {
 
     getFramework(): any {
         return tl.Di.Container.getFramework();
+    }
+
+    getTaskReportService(): TaskReportService {
+        return tl.Di.Container.getService('TaskReportService')
     }
 }
