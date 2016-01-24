@@ -1,6 +1,7 @@
 /// <reference path="./../../../typings/moment/moment.d.ts" />
 var moment = require('moment');
 var task_report_dto_1 = require("../dto/task-report-dto");
+var Promise = require('bluebird');
 var TaskReportService = (function () {
     function TaskReportService(taskService, userTaskService, userService) {
         this.taskService = taskService;

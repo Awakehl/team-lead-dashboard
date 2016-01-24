@@ -8,6 +8,7 @@ import {TaskDTO} from "../dto/task-dto";
 import {UserTaskDTO} from "../dto/user-task-dto";
 import {UserDTO} from "../dto/user-dto";
 import {TaskReportDTO} from "../dto/task-report-dto";
+import Promise = require('bluebird');
 
 export class TaskReportService {
 

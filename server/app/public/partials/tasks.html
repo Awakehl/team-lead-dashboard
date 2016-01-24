@@ -1,11 +1,29 @@
-<div class="container-fluid">
+<div class="container-fluid tasks">
     <div class="row" >
-
-        <div ng-repeat="(name, user) in data" class="pull-left panel panel-primary offset3">
+        <div ng-repeat="(name, user) in data" class="pull-left panel panel-primary">
 
             <div class="panel-heading">{{ name }}</div>
             <div class="panel-body">
-                <div ng-repeat="task in user['dev in progress']">{{ task.summary }}</div>
+
+                <div ng-repeat="task in user['work done']">
+                    <div class="alert alert-success" role="alert">{{ task.key }} {{ task.summary }}</div>
+                </div>
+                <div ng-if="!user['dev in progress']">
+                    <div class="alert alert-danger" role="alert">no current task</div>
+                </div>
+                <div ng-repeat="task in user['dev in progress']">
+                    <div class="alert alert-warning" role="alert">{{ task.key }} {{ task.summary }}</div>
+                </div>
+                <div ng-repeat="task in user['on hold (dev)']">
+                    <div class="alert alert-danger" role="alert">{{ task.key }} {{ task.summary }}</div>
+                </div>
+                <div ng-repeat="task in user['new']">
+                    <div class="alert alert-info" role="alert">{{ task.key }} {{ task.summary }}</div>
+                </div>
+                <div ng-repeat="task in user['reopened']">
+                    <div class="alert alert-danger" role="alert">{{ task.key }} {{ task.summary }}</div>
+                </div>
+
             </div>
         </div>
     </div>
