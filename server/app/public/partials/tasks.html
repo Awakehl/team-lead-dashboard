@@ -1,29 +1,43 @@
-<div class="container-fluid tasks">
-    <div class="row" >
-        <div ng-repeat="(name, user) in data" class="pull-left panel panel-primary">
-
-            <div class="panel-heading">{{ name }}</div>
+<div class="tasks">
+    <div id="left_column">
+        <div class="panel-primary">
+            <div class="panel-heading">Queue</div>
             <div class="panel-body">
+                <div ng-repeat="task in data.unassignedTasks">
+                    <ng-include src="'partials/task.html'" ng-init="class='alert-info'"></ng-include>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="right_column">
+        <div class="container-fluid">
+            <div class="row sortable">
+                <div ng-repeat="(name, user) in data.userData" class="pull-left panel panel-primary" data-id="{{ user.user.id }}">
 
-                <div ng-repeat="task in user['work done']">
-                    <div class="alert alert-success" role="alert">{{ task.key }} {{ task.summary }}</div>
-                </div>
-                <div ng-if="!user['dev in progress']">
-                    <div class="alert alert-danger" role="alert">no current task</div>
-                </div>
-                <div ng-repeat="task in user['dev in progress']">
-                    <div class="alert alert-warning" role="alert">{{ task.key }} {{ task.summary }}</div>
-                </div>
-                <div ng-repeat="task in user['on hold (dev)']">
-                    <div class="alert alert-danger" role="alert">{{ task.key }} {{ task.summary }}</div>
-                </div>
-                <div ng-repeat="task in user['new']">
-                    <div class="alert alert-info" role="alert">{{ task.key }} {{ task.summary }}</div>
-                </div>
-                <div ng-repeat="task in user['reopened']">
-                    <div class="alert alert-danger" role="alert">{{ task.key }} {{ task.summary }}</div>
-                </div>
+                    <div class="panel-heading">{{ name }}</div>
+                    <div class="panel-body">
 
+                        <div ng-if="!user.tasks['dev in progress']">
+                            <div class="alert alert-danger" role="alert">no current task</div>
+                        </div>
+                        <div ng-repeat="task in user.tasks['dev in progress']">
+                            <ng-include src="'partials/task.html'" ng-init="class='alert-warning'"></ng-include>
+                        </div>
+                        <div ng-repeat="task in user.tasks['on hold (dev)']">
+                            <ng-include src="'partials/task.html'" ng-init="class='alert-danger'"></ng-include>
+                        </div>
+                        <div ng-repeat="task in user.tasks['new']">
+                            <ng-include src="'partials/task.html'" ng-init="class='alert-info'"></ng-include>
+                        </div>
+                        <div ng-repeat="task in user.tasks['reopened']">
+                            <ng-include src="'partials/task.html'" ng-init="class='alert-danger'"></ng-include>
+                        </div>
+                        <div ng-repeat="task in user.tasks['work done']">
+                            <ng-include src="'partials/task.html'" ng-init="class='alert-success'"></ng-include>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

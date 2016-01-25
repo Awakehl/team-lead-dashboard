@@ -1,8 +1,17 @@
 .tasks .panel {
   margin: 10px;
   width: 300px;
+  height: 200px;
+  overflow-y: scroll;
 }
 .tasks .alert {
   margin-bottom: 5px;
   padding: 5px;
+}
+#left_column {
+  width: 300px;
+  float: left;
+}
+#right_column {
+  margin-left: 300px;
 }

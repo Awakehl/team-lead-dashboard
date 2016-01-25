@@ -33,9 +33,10 @@ export class TaskReportService {
                 let userTask: UserTaskDTO;
                 let tasksResults: TaskDTO[] = null;
                 let userResults: UserDTO[] = null;
+                let unassignedTaskResults: TaskDTO[] = null;
                 let resolveWhenFinished: Function = (): void => {
-                    if (tasksResults && userResults) {
-                        resolve(new TaskReportDTO(tasksResults, userTasksResults, userResults));
+                    if (tasksResults && userResults && unassignedTaskResults) {
+                        resolve(new TaskReportDTO(tasksResults, userTasksResults, userResults, unassignedTaskResults));
                     }
                 };
 
@@ -45,6 +46,11 @@ export class TaskReportService {
 
                 this.taskService.getByIds(taskIds).then((tasks:TaskDTO[]): void => {
                     tasksResults = tasks;
+                    resolveWhenFinished();
+                });
+
+                this.taskService.getUnassignedTasks().then((tasks:TaskDTO[]): void => {
+                    unassignedTaskResults = tasks;
                     resolveWhenFinished();
                 });
 

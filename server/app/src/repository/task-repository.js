@@ -59,6 +59,19 @@ var TaskRepository = (function (_super) {
             });
         });
     };
+    TaskRepository.prototype.getUnassignedTasks = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.getEntity().findAll({ where: { assignee: null } }).then(function (dbTasks) {
+                var result = [];
+                for (var _i = 0; _i < dbTasks.length; _i++) {
+                    var dbTask = dbTasks[_i];
+                    result.push(app.getEntityConverterService().toTaskDTO(dbTask));
+                }
+                resolve(result);
+            });
+        });
+    };
     TaskRepository.prototype.getEntity = function () {
         return app.getEntity('Task');
     };

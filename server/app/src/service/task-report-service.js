@@ -17,9 +17,10 @@ var TaskReportService = (function () {
                 var userTask;
                 var tasksResults = null;
                 var userResults = null;
+                var unassignedTaskResults = null;
                 var resolveWhenFinished = function () {
-                    if (tasksResults && userResults) {
-                        resolve(new task_report_dto_1.TaskReportDTO(tasksResults, userTasksResults, userResults));
+                    if (tasksResults && userResults && unassignedTaskResults) {
+                        resolve(new task_report_dto_1.TaskReportDTO(tasksResults, userTasksResults, userResults, unassignedTaskResults));
                     }
                 };
                 for (var _i = 0; _i < userTasksResults.length; _i++) {
@@ -28,6 +29,10 @@ var TaskReportService = (function () {
                 }
                 _this.taskService.getByIds(taskIds).then(function (tasks) {
                     tasksResults = tasks;
+                    resolveWhenFinished();
+                });
+                _this.taskService.getUnassignedTasks().then(function (tasks) {
+                    unassignedTaskResults = tasks;
                     resolveWhenFinished();
                 });
                 _this.userService.getAll().then(function (users) {

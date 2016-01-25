@@ -17,4 +17,8 @@ export class TaskService {
         return this.repository.getByIds(ids);
     }
 
+    getUnassignedTasks(): Promise<TaskDTO[]> {
+        return this.repository.getUnassignedTasks();
+    }
+
 }

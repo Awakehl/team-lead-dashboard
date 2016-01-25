@@ -5,10 +5,12 @@ export class TaskReportDTO {
     public tasks: TaskDTO[];
     public userTasks: UserTaskDTO[];
     public users: User[];
+    public unassignedTasks: TaskDTO[]
 
-    constructor(tasks: TaskDTO[], userTasks: UserTaskDTO[], users: User[]) {
+    constructor(tasks: TaskDTO[], userTasks: UserTaskDTO[], users: User[], unassignedTasks: TaskDTO[]) {
         this.tasks = tasks;
         this.userTasks = userTasks;
         this.users = users;
+        this.unassignedTasks = unassignedTasks;
     }
 }
