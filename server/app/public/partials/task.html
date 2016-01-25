@@ -1,3 +1,4 @@
 <div class="alert {{class}}" role="alert">
-    [{{task.status}}] <a href="{{ data.conf.jira }}/browse/{{ task.key }}" target="_blank">{{ task.key }}</a> {{ task.summary }}
+    [{{task.status}}] <a href="{{ data.conf.jira }}/browse/{{ task.key }}" target="_blank">{{ task.key }}</a>
+    {{ task.summary }} ({{ task.assignee }})
 </div>
