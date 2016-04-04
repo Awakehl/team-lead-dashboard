@@ -9,4 +9,3 @@ var UserTaskSummaryDTO = (function () {
     return UserTaskSummaryDTO;
 })();
 exports.UserTaskSummaryDTO = UserTaskSummaryDTO;
-//# sourceMappingURL=user-task-summary-dto.js.map

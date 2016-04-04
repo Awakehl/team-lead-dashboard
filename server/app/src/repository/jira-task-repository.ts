@@ -11,6 +11,7 @@ import Promise = require('bluebird');
 import moment = require('moment');
 import {ClientResponse} from "http";
 import {UserDTO} from "../dto/user-dto";
+import {ImportFilterDTO} from "../dto/import-filter-dto";
 
 declare var app: AppService;
 
@@ -18,7 +19,7 @@ export class JiraTaskRepository {
 
     private config: any = app.getConf('jira');
 
-    getTasks(users: UserDTO[]): Promise<TaskDTO[]> {
+    getTasks(users: UserDTO[], filter: ImportFilterDTO): Promise<TaskDTO[]> {
 
         return new Promise<TaskDTO[]>((resolve: Function, reject: Function):void => {
             var self = this;
@@ -52,8 +53,8 @@ export class JiraTaskRepository {
                         }
 
                         url = this.getBaseUrl(this.config['tasks_url'])
-                            .replace('__DATETIME__', moment().subtract(3, 'days').format('YYYY-MM-DD'))
-                            .replace('__LONGDATETIME__', moment().subtract(1, 'months').format('YYYY-MM-DD'))
+                            .replace('__DATETIME__', moment().subtract(filter.short, 'days').format('YYYY-MM-DD'))
+                            .replace('__LONGDATETIME__', moment().subtract(filter.long, 'months').format('YYYY-MM-DD'))
                             .replace('__EPICS__', epics.join(','))
                             .replace('__ASSIGNEE__', assignee.join(','));
 

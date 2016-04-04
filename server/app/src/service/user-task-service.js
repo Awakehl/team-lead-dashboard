@@ -15,4 +15,3 @@ var UserTaskService = (function () {
     return UserTaskService;
 })();
 exports.UserTaskService = UserTaskService;
-//# sourceMappingURL=user-task-service.js.map

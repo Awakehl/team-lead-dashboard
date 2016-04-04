@@ -16,4 +16,3 @@ var InitUserCalendarService = (function () {
     return InitUserCalendarService;
 })();
 exports.InitUserCalendarService = InitUserCalendarService;
-//# sourceMappingURL=init-user-calendar-service.js.map

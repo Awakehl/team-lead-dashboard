@@ -9,7 +9,7 @@ var JiraTaskRepository = (function () {
     function JiraTaskRepository() {
         this.config = app.getConf('jira');
     }
-    JiraTaskRepository.prototype.getTasks = function (users) {
+    JiraTaskRepository.prototype.getTasks = function (users, filter) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             var self = _this;
@@ -40,8 +40,8 @@ var JiraTaskRepository = (function () {
                             assignee.push(user.name);
                         }
                         url = _this.getBaseUrl(_this.config['tasks_url'])
-                            .replace('__DATETIME__', moment().subtract(3, 'days').format('YYYY-MM-DD'))
-                            .replace('__LONGDATETIME__', moment().subtract(1, 'months').format('YYYY-MM-DD'))
+                            .replace('__DATETIME__', moment().subtract(filter.short, 'days').format('YYYY-MM-DD'))
+                            .replace('__LONGDATETIME__', moment().subtract(filter.long, 'months').format('YYYY-MM-DD'))
                             .replace('__EPICS__', epics.join(','))
                             .replace('__ASSIGNEE__', assignee.join(','));
                         var req = requester.get(url, function (res) {
@@ -92,4 +92,3 @@ var JiraTaskRepository = (function () {
     return JiraTaskRepository;
 })();
 exports.JiraTaskRepository = JiraTaskRepository;
-//# sourceMappingURL=jira-task-repository.js.map

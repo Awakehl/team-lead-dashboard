@@ -6,6 +6,7 @@ import {UserTaskService} from "./user-task-service";
 
 import Promise = require('bluebird');
 import {UserDTO} from "../dto/user-dto";
+import {ImportFilterDTO} from "../dto/import-filter-dto";
 
 export class ImportTasksService {
 
@@ -22,11 +23,11 @@ export class ImportTasksService {
         this.userTaskService = userTaskService;
     }
 
-    import(): Promise<TaskDTO[]> {
+    import(filter: ImportFilterDTO): Promise<TaskDTO[]> {
 
        return this.userService.getAll()
             .then((users: UserDTO[]): Promise<TaskDTO[]> => {
-                return this.jiraTaskService.getTasks(users);
+                return this.jiraTaskService.getTasks(users, filter);
             })
             .then((tasks: TaskDTO[]): Promise<TaskDTO[]> => {
                return this.taskService.importTasks(tasks);

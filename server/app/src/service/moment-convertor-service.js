@@ -8,4 +8,3 @@ var MomentConvertorService = (function () {
     return MomentConvertorService;
 })();
 exports.MomentConvertorService = MomentConvertorService;
-//# sourceMappingURL=moment-convertor-service.js.map

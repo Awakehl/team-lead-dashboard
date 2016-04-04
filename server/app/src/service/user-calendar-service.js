@@ -33,4 +33,3 @@ var UserCalendarService = (function () {
     return UserCalendarService;
 })();
 exports.UserCalendarService = UserCalendarService;
-//# sourceMappingURL=user-calendar-service.js.map

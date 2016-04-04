@@ -56,4 +56,3 @@ var UserCalendarRepository = (function (_super) {
     return UserCalendarRepository;
 })(abstract_repository_1.AbstractRepository);
 exports.UserCalendarRepository = UserCalendarRepository;
-//# sourceMappingURL=user-calendar-repository.js.map

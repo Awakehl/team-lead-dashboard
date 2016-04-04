@@ -6,4 +6,3 @@ var UserDTO = (function () {
     return UserDTO;
 })();
 exports.UserDTO = UserDTO;
-//# sourceMappingURL=user-dto.js.map

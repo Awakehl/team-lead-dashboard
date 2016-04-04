@@ -5,11 +5,11 @@ var ImportTasksService = (function () {
         this.userService = userService;
         this.userTaskService = userTaskService;
     }
-    ImportTasksService.prototype.import = function () {
+    ImportTasksService.prototype.import = function (filter) {
         var _this = this;
         return this.userService.getAll()
             .then(function (users) {
-            return _this.jiraTaskService.getTasks(users);
+            return _this.jiraTaskService.getTasks(users, filter);
         })
             .then(function (tasks) {
             return _this.taskService.importTasks(tasks);
@@ -24,4 +24,3 @@ var ImportTasksService = (function () {
     return ImportTasksService;
 })();
 exports.ImportTasksService = ImportTasksService;
-//# sourceMappingURL=import-tasks-service.js.map

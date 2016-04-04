@@ -47,4 +47,3 @@ var EntityConverterService = (function () {
     return EntityConverterService;
 })();
 exports.EntityConverterService = EntityConverterService;
-//# sourceMappingURL=entity-converter-service.js.map
