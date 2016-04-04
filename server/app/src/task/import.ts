@@ -1,5 +1,4 @@
 import {AppService} from "../service/app-service";
-import Function0 = _.Function0;
 declare var app: AppService;
 
 require('./../../bootstrap.js');

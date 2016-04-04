@@ -1,8 +1,9 @@
 var user_dto_1 = require("../dto/user-dto");
 var Promise = require('bluebird');
 var UserService = (function () {
-    function UserService(repository) {
+    function UserService(repository, userCalendarService) {
         this.repository = repository;
+        this.userCalendarService = userCalendarService;
     }
     UserService.prototype.importUsersFromTasks = function (tasks) {
         var _this = this;
@@ -11,7 +12,7 @@ var UserService = (function () {
             var user;
             var insert = [];
             var task;
-            _this.repository.findAll().then(function (users) {
+            _this.repository.getAll().then(function (users) {
                 for (var _i = 0; _i < users.length; _i++) {
                     user = users[_i];
                     existing[user.name] = user;
@@ -26,6 +27,10 @@ var UserService = (function () {
                 }
                 if (insert.length) {
                     _this.repository.createMany(insert).then(function () {
+                        for (var _i = 0; _i < insert.length; _i++) {
+                            user = insert[_i];
+                            _this.userCalendarService.initUserCalendar(user.id);
+                        }
                         resolve(tasks);
                     });
                 }
@@ -35,9 +40,13 @@ var UserService = (function () {
             });
         });
     };
+    UserService.prototype.getByIds = function (userIds) {
+        return this.repository.getByIds(userIds);
+    };
     UserService.prototype.getAll = function () {
         return this.repository.getAll();
     };
     return UserService;
 })();
 exports.UserService = UserService;
+//# sourceMappingURL=user-service.js.map

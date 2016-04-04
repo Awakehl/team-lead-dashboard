@@ -12,6 +12,10 @@ var SequelizeFramework = function(framework, definition) {
         return framework.define(arguments[0], arguments[1]);
     };
 
+    o.query = function() {
+        return framework.query(arguments[0], arguments[1]);
+    };
+
     return o;
 };
 

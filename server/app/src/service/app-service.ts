@@ -13,6 +13,10 @@ import {UserService} from "./user-service";
 import {UserTaskRepository} from "../repository/user-task-repository";
 import {UserTaskService} from "./user-task-service";
 import {TaskReportService} from "./task-report-service";
+import {UserCalendarRepository} from "../repository/user-calendar-repository";
+import {UserCalendarService} from "./user-calendar-service";
+import {InitUserCalendarService} from "./init-user-calendar-service";
+import {MomentConvertorService} from "./moment-convertor-service";
 declare var tl: any;
 declare var _: any;
 
@@ -81,4 +85,21 @@ export class AppService {
     getTaskReportService(): TaskReportService {
         return tl.Di.Container.getService('TaskReportService')
     }
+
+    getUserCalendarRepository(): UserCalendarRepository {
+        return tl.Di.Container.getRepository('UserCalendarRepository')
+    }
+
+    getUserCalendarService(): UserCalendarService {
+        return tl.Di.Container.getService('UserCalendarService')
+    }
+
+    getInitUserCalendarService(): InitUserCalendarService {
+        return tl.Di.Container.getService('InitUserCalendarService')
+    }
+
+    getMomentConvertorService(): MomentConvertorService {
+        return tl.Di.Container.getService('MomentConvertorService')
+    }
+
 }

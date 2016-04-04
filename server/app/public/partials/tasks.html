@@ -14,28 +14,42 @@
             <div class="row sortable">
                 <div ng-repeat="(name, user) in data.userData" class="pull-left panel panel-primary" data-id="{{ user.user.id }}">
 
-                    <div class="panel-heading">{{ name }}</div>
+                    <div class="panel-heading">{{ name }}
+                        <span ng-if="user.tasks['dev in progress'][0]">
+                            <b>{{100*(user.tasks['dev in progress'][0].spentTime/(60*60*2)/user.tasks['dev in progress'][0].estimation).toFixed(0)}}%</b>
+                        </span>
+                    </div>
                     <div class="panel-body">
-
-                        <div ng-if="!user.tasks['dev in progress']">
+                        <div ng-if="!user.tasks['dev in progress'] && !user.tasks['in progress']">
                             <div class="alert alert-danger" role="alert">no current task</div>
                         </div>
                         <div ng-repeat="task in user.tasks['dev in progress']">
                             <ng-include src="'partials/task.html'" ng-init="class='alert-warning'"></ng-include>
                         </div>
+                        <div ng-repeat="task in user.tasks['in progress']">
+                            <ng-include src="'partials/task.html'" ng-init="class='alert-warning'"></ng-include>
+                        </div>
                         <div ng-repeat="task in user.tasks['on hold (dev)']">
+                            <ng-include src="'partials/task.html'" ng-init="class='alert-danger'"></ng-include>
+                        </div>
+                        <div ng-repeat="task in user.tasks['reopened']">
+                            <ng-include src="'partials/task.html'" ng-init="class='alert-danger'"></ng-include>
+                        </div>
+                        <div ng-repeat="task in user.tasks['to be clarified']">
                             <ng-include src="'partials/task.html'" ng-init="class='alert-danger'"></ng-include>
                         </div>
                         <div ng-repeat="task in user.tasks['new']">
                             <ng-include src="'partials/task.html'" ng-init="class='alert-info'"></ng-include>
                         </div>
-                        <div ng-repeat="task in user.tasks['reopened']">
-                            <ng-include src="'partials/task.html'" ng-init="class='alert-danger'"></ng-include>
-                        </div>
                         <div ng-repeat="task in user.tasks['work done']">
                             <ng-include src="'partials/task.html'" ng-init="class='alert-success'"></ng-include>
                         </div>
-
+                        <div ng-repeat="task in user.tasks['verified']">
+                            <ng-include src="'partials/task.html'" ng-init="class='alert-success'"></ng-include>
+                        </div>
+                        <div ng-repeat="task in user.tasks['rc verified']">
+                            <ng-include src="'partials/task.html'" ng-init="class='alert-success'"></ng-include>
+                        </div>
                     </div>
                 </div>
             </div>

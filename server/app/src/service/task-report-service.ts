@@ -9,58 +9,77 @@ import {UserTaskDTO} from "../dto/user-task-dto";
 import {UserDTO} from "../dto/user-dto";
 import {TaskReportDTO} from "../dto/task-report-dto";
 import Promise = require('bluebird');
+import {UserTaskSummaryDTO} from "../dto/user-task-summary-dto";
+import {UserCalendarService} from "./user-calendar-service";
+import {UserCalendarDTO} from "../dto/user-calendar-dto";
+import {TaskReportFilterDTO} from "../dto/task-report-filter-dto";
 
 export class TaskReportService {
 
     private taskService: TaskService;
     private userTaskService: UserTaskService;
     private userService: UserService;
+    private userCalendarService: UserCalendarService;
 
-    constructor(taskService: TaskService, userTaskService: UserTaskService, userService: UserService) {
+    constructor(
+        taskService: TaskService,
+        userTaskService: UserTaskService,
+        userService: UserService,
+        userCalendarService: UserCalendarService
+    ) {
         this.taskService = taskService;
         this.userTaskService = userTaskService;
         this.userService = userService;
+        this.userCalendarService = userCalendarService;
     }
 
-    getReport(): Promise<TaskReportDTO> {
+    getReport(filter: TaskReportFilterDTO): Promise<TaskReportDTO> {
 
         return new Promise<TaskReportDTO>((resolve: Function): void => {
             let from = moment().subtract(1, 'week');
 
-            this.userTaskService.getByDate(from).then((userTasksResults: UserTaskDTO[]): void => {
+            let promise: Promise<TaskDTO[]> = filter.epics || filter.users ?  this.taskService.getByFilter(filter) : this.taskService.getByDate(from);
+            promise.then((taskResults: TaskDTO[]): void => {
 
-                let taskIds: number[] = [];
-                let userTask: UserTaskDTO;
-                let tasksResults: TaskDTO[] = null;
+                let userTaskSummaryResults: UserTaskSummaryDTO[] = null;
+                let userTaskSummary: UserTaskSummaryDTO;
                 let userResults: UserDTO[] = null;
                 let unassignedTaskResults: TaskDTO[] = null;
+                let userIds: number[] = [];
+
                 let resolveWhenFinished: Function = (): void => {
-                    if (tasksResults && userResults && unassignedTaskResults) {
-                        resolve(new TaskReportDTO(tasksResults, userTasksResults, userResults, unassignedTaskResults));
+                    if (userTaskSummaryResults && userResults && unassignedTaskResults) {
+                        resolve(new TaskReportDTO(taskResults, userTaskSummaryResults, userResults, unassignedTaskResults));
                     }
                 };
 
-                for (userTask of userTasksResults) {
-                    taskIds.push(userTask.taskId);
+                this.userTaskService.getStatsByTasks(taskResults).then((userTasksSummary:UserTaskSummaryDTO[]): void => {
+                    userTaskSummaryResults = userTasksSummary;
+                    for (userTaskSummary of userTasksSummary) {
+                        userIds.push(userTaskSummary.userId);
+                    }
+
+                    this.userService.getByIds(userIds)
+                    .then((users:UserDTO[]): void => {
+                        userResults = users;
+                        resolveWhenFinished();
+                    });
+                });
+
+                if (filter.epics) {
+                    this.taskService.getUnassignedTasks(filter.epics).then((tasks:TaskDTO[]):void => {
+                        unassignedTaskResults = tasks;
+                        resolveWhenFinished();
+                    });
+                } else {
+                    unassignedTaskResults = [];
+                    resolveWhenFinished();
                 }
 
-                this.taskService.getByIds(taskIds).then((tasks:TaskDTO[]): void => {
-                    tasksResults = tasks;
-                    resolveWhenFinished();
-                });
+            });
 
-                this.taskService.getUnassignedTasks().then((tasks:TaskDTO[]): void => {
-                    unassignedTaskResults = tasks;
-                    resolveWhenFinished();
-                });
-
-                this.userService.getAll().then((users:UserDTO[]): void => {
-                    userResults = users;
-                    resolveWhenFinished();
-                });
-
-            })
         })
+
     }
 
 }

@@ -9,9 +9,16 @@ var TaskService = (function () {
         if (ids === void 0) { ids = []; }
         return this.repository.getByIds(ids);
     };
-    TaskService.prototype.getUnassignedTasks = function () {
-        return this.repository.getUnassignedTasks();
+    TaskService.prototype.getUnassignedTasks = function (epics) {
+        return this.repository.getUnassignedTasks(epics);
+    };
+    TaskService.prototype.getByDate = function (from) {
+        return this.repository.getByDate(from);
+    };
+    TaskService.prototype.getByFilter = function (filter) {
+        return this.repository.getByFilter(filter);
     };
     return TaskService;
 })();
 exports.TaskService = TaskService;
+//# sourceMappingURL=task-service.js.map

@@ -25,7 +25,7 @@
         "grunt-contrib-jshint": "",
         "bluebird": "",
         "moment": "",
-        "express": ""
+        "stdio": ""
     },
     "devDependencies": {
 
@@ -33,6 +33,7 @@
     "scripts": {
         "sync": "node app/src/task/sync.js",
         "import": "node app/src/task/import.js",
-        "server": "node app/src/task/server.js"
+        "server": "node app/src/task/server.js",
+        "init-user-calendars": "node app/src/task/init-user-calendars.js"
     }
 }

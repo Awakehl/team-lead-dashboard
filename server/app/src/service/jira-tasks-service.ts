@@ -1,13 +1,14 @@
 import {AppService} from "./app-service";
 import {TaskDTO} from "../dto/task-dto";
 import Promise = require('bluebird');
+import {UserDTO} from "../dto/user-dto";
 
 declare var app: AppService;
 
 export class JiraTasksService {
 
-    getTasks():Promise<TaskDTO[]> {
+    getTasks(users: UserDTO[]):Promise<TaskDTO[]> {
 
-        return app.getJiraTaskRepository().getTasks();
+        return app.getJiraTaskRepository().getTasks(users);
     }
 }

@@ -7,8 +7,10 @@ var ImportTasksService = (function () {
     }
     ImportTasksService.prototype.import = function () {
         var _this = this;
-        return this.jiraTaskService
-            .getTasks()
+        return this.userService.getAll()
+            .then(function (users) {
+            return _this.jiraTaskService.getTasks(users);
+        })
             .then(function (tasks) {
             return _this.taskService.importTasks(tasks);
         })
@@ -22,3 +24,4 @@ var ImportTasksService = (function () {
     return ImportTasksService;
 })();
 exports.ImportTasksService = ImportTasksService;
+//# sourceMappingURL=import-tasks-service.js.map

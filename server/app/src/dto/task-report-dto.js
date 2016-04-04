@@ -1,10 +1,11 @@
 var TaskReportDTO = (function () {
-    function TaskReportDTO(tasks, userTasks, users, unassignedTasks) {
+    function TaskReportDTO(tasks, userTasksSummary, users, unassignedTasks) {
         this.tasks = tasks;
-        this.userTasks = userTasks;
+        this.userTasksSummary = userTasksSummary;
         this.users = users;
         this.unassignedTasks = unassignedTasks;
     }
     return TaskReportDTO;
 })();
 exports.TaskReportDTO = TaskReportDTO;
+//# sourceMappingURL=task-report-dto.js.map

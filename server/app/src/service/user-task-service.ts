@@ -3,8 +3,8 @@
 import {TaskDTO} from "../dto/task-dto";
 import {UserTaskRepository} from "../repository/user-task-repository";
 
-import Moment = moment.Moment;
 import {UserTaskDTO} from "../dto/user-task-dto";
+import {UserTaskSummaryDTO} from "../dto/user-task-summary-dto";
 
 export class UserTaskService {
 
@@ -18,7 +18,12 @@ export class UserTaskService {
         return this.repository.update(tasks);
     }
 
-    getByDate(from: Moment): Promise<UserTaskDTO[]> {
-        return this.repository.getByDate(from);
+    getByTaskIds(taskIds: number[]): Promise<UserTaskDTO[]> {
+        return this.repository.getByTaskIds(taskIds);
     }
+
+    getStatsByTasks(tasks: TaskDTO[]): Promise<UserTaskSummaryDTO[]> {
+        return this.repository.getStatsByTasks(tasks);
+    }
+
 }

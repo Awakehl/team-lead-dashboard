@@ -12,6 +12,7 @@ export class Task {
             estimation: app.getFramework().definition.DOUBLE,
             summary: app.getFramework().definition.STRING,
             status: app.getFramework().definition.STRING,
+            epic_key: app.getFramework().definition.STRING,
         });
     }
 

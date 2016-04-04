@@ -47,7 +47,7 @@ var Services = function () {
         }),
 
         userService: tl.Di.Container.share(function() {
-            return new tl.Service.UserService.UserService(app.getUserRepository());
+            return new tl.Service.UserService.UserService(app.getUserRepository(), app.getUserCalendarService());
         }),
 
         userTaskService: tl.Di.Container.share(function() {
@@ -62,9 +62,23 @@ var Services = function () {
             return new tl.Service.TaskReportService.TaskReportService(
                 app.getTaskService(),
                 app.getUserTaskService(),
-                app.getUserService()
+                app.getUserService(),
+                app.getUserCalendarService()
             );
+        }),
+
+        userCalendarService: tl.Di.Container.share(function() {
+            return new tl.Service.UserCalendarService.UserCalendarService(app.getUserCalendarRepository());
+        }),
+
+        initUserCalendarService: tl.Di.Container.share(function() {
+            return new tl.Service.InitUserCalendarService.InitUserCalendarService(app.getUserService(), app.getUserCalendarService());
+        }),
+
+        momentConvertorService: tl.Di.Container.share(function() {
+            return new tl.Service.MomentConvertorService.MomentConvertorService();
         })
+
     }
 
 };

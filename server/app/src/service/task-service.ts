@@ -1,6 +1,9 @@
 import {TaskDTO} from "../dto/task-dto";
 import {TaskRepository} from "../repository/task-repository";
 
+import Moment = moment.Moment;
+import {TaskReportFilterDTO} from "../dto/task-report-filter-dto";
+
 export class TaskService {
 
     private repository: TaskRepository;
@@ -17,8 +20,16 @@ export class TaskService {
         return this.repository.getByIds(ids);
     }
 
-    getUnassignedTasks(): Promise<TaskDTO[]> {
-        return this.repository.getUnassignedTasks();
+    getUnassignedTasks(epics: string[]): Promise<TaskDTO[]> {
+        return this.repository.getUnassignedTasks(epics);
+    }
+
+    getByDate(from: Moment): Promise<TaskDTO[]> {
+        return this.repository.getByDate(from);
+    }
+
+    getByFilter(filter: TaskReportFilterDTO): Promise<TaskDTO[]> {
+        return this.repository.getByFilter(filter);
     }
 
 }

@@ -7,8 +7,6 @@ export class UserCalendar {
 
     constructor() {
         return app.getFramework().define('userCalendar', {
-            name: app.getFramework().definition.STRING,
-
             user_id: {
                 type: app.getFramework().definition.INTEGER,
 
@@ -20,9 +18,8 @@ export class UserCalendar {
             },
 
             date: app.getFramework().definition.DATE,
-            startTime: app.getFramework().definition.DATE,
-            endTime: app.getFramework().definition.DATE,
-            standUp: { type: app.getFramework().definition.BOOLEAN, allowNull: false, defaultValue: true }
+            start_time: app.getFramework().definition.DATE,
+            end_time: app.getFramework().definition.DATE,
         });
     }
 

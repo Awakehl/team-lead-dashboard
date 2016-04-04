@@ -5,7 +5,8 @@ var Task = (function () {
             assignee: app.getFramework().definition.STRING,
             estimation: app.getFramework().definition.DOUBLE,
             summary: app.getFramework().definition.STRING,
-            status: app.getFramework().definition.STRING
+            status: app.getFramework().definition.STRING,
+            epic_key: app.getFramework().definition.STRING
         });
     }
     return Task;

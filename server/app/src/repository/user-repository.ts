@@ -10,21 +10,6 @@ declare var app: AppService;
 
 export class UserRepository {
 
-    public findAll(): Promise<UserDTO[]> {
-        return new Promise<UserDTO[]>((resolve: Function): void => {
-            this.getEntity().findAll().then((dbUsers: string[]): void => {
-                let users:UserDTO[] = [];
-
-                for (let dbUser of dbUsers) {
-                    users.push(app.getEntityConverterService().toUserDTO(dbUser));
-                }
-
-                resolve(users);
-            })
-        })
-
-    }
-
     public createMany(dtos:UserDTO[]): Promise<string[]> {
         return this.getEntity().bulkCreate(dtos);
     };
@@ -34,6 +19,28 @@ export class UserRepository {
         return new Promise<UserDTO[]>((resolve: Function): void => {
 
             this.getEntity().findAll().then(
+                (dbUsers: string[]): void => {
+
+                    let result: UserDTO[] = [];
+
+                    for (let dbUser of dbUsers) {
+                        result.push(app.getEntityConverterService().toUserDTO(dbUser));
+                    }
+
+                    resolve(result);
+                }
+
+            )
+        })
+    }
+
+    public getByIds(userIds: number[]): Promise<UserDTO[]> {
+
+        return new Promise<UserDTO[]>((resolve: Function): void => {
+
+            this.getEntity().findAll({where:{
+                id: {$in: userIds}
+            }}).then(
                 (dbUsers: string[]): void => {
 
                     let result: UserDTO[] = [];

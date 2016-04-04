@@ -1,9 +1,10 @@
 var JiraTasksService = (function () {
     function JiraTasksService() {
     }
-    JiraTasksService.prototype.getTasks = function () {
-        return app.getJiraTaskRepository().getTasks();
+    JiraTasksService.prototype.getTasks = function (users) {
+        return app.getJiraTaskRepository().getTasks(users);
     };
     return JiraTasksService;
 })();
 exports.JiraTasksService = JiraTasksService;
+//# sourceMappingURL=jira-tasks-service.js.map

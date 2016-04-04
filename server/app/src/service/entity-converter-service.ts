@@ -1,6 +1,8 @@
 import {UserTaskDTO} from "../dto/user-task-dto";
 import {TaskDTO} from "../dto/task-dto";
 import {UserDTO} from "../dto/user-dto";
+import {UserCalendarDTO} from "../dto/user-calendar-dto";
+import {UserTaskSummaryDTO} from "../dto/user-task-summary-dto";
 
 export class EntityConverterService {
 
@@ -12,8 +14,22 @@ export class EntityConverterService {
             model['assignee'],
             model['estimation'],
             model['summary'],
-            model['status']
+            model['status'],
+            model['epic_key']
         );
+    }
+
+    toTaskDbObject(entity: TaskDTO): any {
+
+        return {
+            id: entity.id,
+            key: entity.key,
+            assignee: entity.assignee,
+            estimation: entity.estimation,
+            summary: entity.summary,
+            status: entity.status,
+            epic_key: entity.epicKey
+        };
     }
 
     toUserTaskDTO(model: any): UserTaskDTO {
@@ -43,6 +59,27 @@ export class EntityConverterService {
         return new UserDTO(
             model['id'],
             model['name']
+        );
+    }
+
+    toUserCalendarDTO(model: any): UserCalendarDTO {
+
+        return new UserCalendarDTO(
+            model['id'],
+            model['user_id'],
+            model['date'],
+            model['start_time'],
+            model['end_time']
+        );
+    }
+
+    toUserTaskSummaryDTO(model: any): UserTaskSummaryDTO {
+        return new UserTaskSummaryDTO(
+            model['task_id'],
+            model['user_id'],
+            model['start_time'],
+            model['end_time'],
+            model['spent_time']
         );
     }
 

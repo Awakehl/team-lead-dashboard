@@ -1,3 +1,4 @@
+/// <reference path="../../../typings/moment/moment.d.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -32,10 +33,10 @@ var TaskRepository = (function (_super) {
                     task = tasks[_a];
                     if (existing.hasOwnProperty(task.id)
                         && !app.getEntityConverterService().isEquals(task, existing[task.id])) {
-                        update.push(task);
+                        update.push(app.getEntityConverterService().toTaskDbObject(task));
                     }
                     else if (!existing.hasOwnProperty(task.id)) {
-                        insert.push(task);
+                        insert.push(app.getEntityConverterService().toTaskDbObject(task));
                     }
                 }
                 _this.createMany(insert).then(function () {
@@ -59,10 +60,54 @@ var TaskRepository = (function (_super) {
             });
         });
     };
-    TaskRepository.prototype.getUnassignedTasks = function () {
+    TaskRepository.prototype.getByDate = function (from) {
         var _this = this;
         return new Promise(function (resolve) {
-            _this.getEntity().findAll({ where: { assignee: null } }).then(function (dbTasks) {
+            var sqlFrom = from.format('YYYY-MM-DD HH:mm:ss');
+            _this.getEntity().findAll({ where: {
+                    updatedAt: { $gte: sqlFrom }
+                } }).then(function (dbTasks) {
+                var result = [];
+                for (var _i = 0; _i < dbTasks.length; _i++) {
+                    var dbTask = dbTasks[_i];
+                    result.push(app.getEntityConverterService().toTaskDTO(dbTask));
+                }
+                resolve(result);
+            });
+        });
+    };
+    TaskRepository.prototype.getByFilter = function (filter) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            var where = {};
+            if (filter.epics) {
+                where.epic_key = { $in: filter.epics };
+            }
+            if (filter.users) {
+                where.assignee = { $in: filter.users };
+            }
+            _this.getEntity().findAll({ where: where }).then(function (dbTasks) {
+                var result = [];
+                for (var _i = 0; _i < dbTasks.length; _i++) {
+                    var dbTask = dbTasks[_i];
+                    result.push(app.getEntityConverterService().toTaskDTO(dbTask));
+                }
+                resolve(result);
+            });
+        });
+    };
+    TaskRepository.prototype.getUnassignedTasks = function (epics) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            var filter = {
+                assignee: null
+            };
+            if (epics) {
+                filter['epic_key'] = {
+                    $in: epics
+                };
+            }
+            _this.getEntity().findAll({ where: filter }).then(function (dbTasks) {
                 var result = [];
                 for (var _i = 0; _i < dbTasks.length; _i++) {
                     var dbTask = dbTasks[_i];
@@ -78,3 +123,4 @@ var TaskRepository = (function (_super) {
     return TaskRepository;
 })(abstract_repository_1.AbstractRepository);
 exports.TaskRepository = TaskRepository;
+//# sourceMappingURL=task-repository.js.map

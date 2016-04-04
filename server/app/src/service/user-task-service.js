@@ -6,9 +6,13 @@ var UserTaskService = (function () {
     UserTaskService.prototype.update = function (tasks) {
         return this.repository.update(tasks);
     };
-    UserTaskService.prototype.getByDate = function (from) {
-        return this.repository.getByDate(from);
+    UserTaskService.prototype.getByTaskIds = function (taskIds) {
+        return this.repository.getByTaskIds(taskIds);
+    };
+    UserTaskService.prototype.getStatsByTasks = function (tasks) {
+        return this.repository.getStatsByTasks(tasks);
     };
     return UserTaskService;
 })();
 exports.UserTaskService = UserTaskService;
+//# sourceMappingURL=user-task-service.js.map

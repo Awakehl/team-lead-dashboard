@@ -1,14 +1,15 @@
 var TaskDTO = (function () {
-    function TaskDTO(id, key, assignee, estimation, summary, status) {
+    function TaskDTO(id, key, assignee, estimation, summary, status, epicKey) {
         this.id = id;
         this.key = key;
         this.assignee = assignee;
         this.estimation = estimation;
         this.summary = summary;
         this.status = status;
+        this.epicKey = epicKey;
     }
     TaskDTO.prototype.inProgress = function () {
-        return -1 !== ['dev in progress'].indexOf(this.status.toLowerCase());
+        return -1 !== ['dev in progress', 'in progress'].indexOf(this.status.toLowerCase());
     };
     TaskDTO.prototype.isCompleted = function () {
         return -1 !== ['work done', 'verified', 'rc verified', 'live'].indexOf(this.status.toLowerCase());
@@ -19,3 +20,4 @@ var TaskDTO = (function () {
     return TaskDTO;
 })();
 exports.TaskDTO = TaskDTO;
+//# sourceMappingURL=task-dto.js.map

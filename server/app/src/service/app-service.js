@@ -59,6 +59,19 @@ var AppService = (function () {
     AppService.prototype.getTaskReportService = function () {
         return tl.Di.Container.getService('TaskReportService');
     };
+    AppService.prototype.getUserCalendarRepository = function () {
+        return tl.Di.Container.getRepository('UserCalendarRepository');
+    };
+    AppService.prototype.getUserCalendarService = function () {
+        return tl.Di.Container.getService('UserCalendarService');
+    };
+    AppService.prototype.getInitUserCalendarService = function () {
+        return tl.Di.Container.getService('InitUserCalendarService');
+    };
+    AppService.prototype.getMomentConvertorService = function () {
+        return tl.Di.Container.getService('MomentConvertorService');
+    };
     return AppService;
 })();
 exports.AppService = AppService;
+//# sourceMappingURL=app-service.js.map

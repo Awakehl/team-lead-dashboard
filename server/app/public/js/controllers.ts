@@ -7,12 +7,14 @@ var dashboardControllers = angular.module('dashboardControllers', []);
 
 declare var conf: any;
 
-dashboardControllers.controller('TaskController', ['$scope', '$http',
-    ($scope, $http): void => {
+dashboardControllers.controller('TaskController',
+    ($scope, $http, $routeParams): void => {
 
         let update: Function = () => {
 
-            $http.get('tasks/users').success(function(data) {
+            let epics: string = $routeParams.epics || '';
+            let users: string = $routeParams.users || '';
+            $http.get('tasks/users?epics='+epics+'&users='+users).success(function(data) {
 
                 let userData: any = {};
                 let userById: any = {};
@@ -30,14 +32,15 @@ dashboardControllers.controller('TaskController', ['$scope', '$http',
                     taskById[task.id] = task;
                 }
 
-                for(let userTask of data.userTasks) {
-                    let task = taskById[userTask.taskId];
-                    let user = userById[userTask.userId];
+                for(let userTaskSummary of data.userTasksSummary) {
+                    let task = taskById[userTaskSummary.taskId];
+                    let user = userById[userTaskSummary.userId];
                     let status: string = task.status.toLowerCase();
                     let userItem: any = userData[user];
                     if (!userItem.tasks.hasOwnProperty(status)) {
                         userItem.tasks[status] = [];
                     }
+                    task.spentTime = userTaskSummary.spentTime;
                     userItem.tasks[status].push(task);
                 }
 
@@ -86,7 +89,7 @@ dashboardControllers.controller('TaskController', ['$scope', '$http',
                     selection.each((index: number):void => {
                         order[index] = selection.eq(index).data('id');
                     });
-                    $.cookie(key, order);
+                    $.cookie(key, order, { expiry: 0, domain: '', path: '' });
                 };
 
                 let onRender: Function = (): void => {
@@ -116,4 +119,4 @@ dashboardControllers.controller('TaskController', ['$scope', '$http',
         update();
         setInterval(update, 30000);
     }
-]);
+);

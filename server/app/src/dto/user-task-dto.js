@@ -9,3 +9,4 @@ var UserTaskDTO = (function () {
     return UserTaskDTO;
 })();
 exports.UserTaskDTO = UserTaskDTO;
+//# sourceMappingURL=user-task-dto.js.map
