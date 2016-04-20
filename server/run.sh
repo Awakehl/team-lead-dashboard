@@ -1,0 +1,1 @@
+nohup forever app/src/task/import.js >> output.log &

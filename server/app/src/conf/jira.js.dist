@@ -1,0 +1,11 @@
+var jira = {
+    host: 'atlassian.net',
+    epics_url: "/rest/api/2/search?jql=labels=dd-epic",
+    tasks_url: "/rest/api/2/search?jql=assignee in () and updatedDate > '__DATETIME__'&maxResults=1000",
+    sprint_url: "/rest/api/2/search?jql=assignee in (EMPTY) AND sprint in openSprints() AND sprint = ",
+    login: 'fixme',
+    password: 'fixme',
+    protocol: 'https'
+}
+
+module.exports = jira;

@@ -1,0 +1,39 @@
+{
+	"name": "team-lead-dashboard",
+	"version": "1.0.0",
+	"description": "Team lead dashboard server",
+	"author": "Semen Tanianskii <awakehl@gmail.com>",
+    "contributors": [
+        {
+            "name": "Semen Tanianskii",
+            "email": "awakehl@gmail.com"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Awakehl/team-lead-dashboard.git"
+    },
+	"dependencies": {
+        "sequelize": "*",
+        "mysql": "*",
+        "commander": "*",
+        "lodash": "3.*",
+        "path": "*",
+        "typescript": "*",
+        "grunt-cli": "",
+        "grunt-typescript": "",
+        "grunt-contrib-jshint": "",
+        "bluebird": "",
+        "moment": "",
+        "stdio": ""
+    },
+    "devDependencies": {
+
+	},
+    "scripts": {
+        "sync": "node app/src/task/sync.js",
+        "import": "node app/src/task/import.js",
+        "server": "node app/src/task/server.js",
+        "init-user-calendars": "node app/src/task/init-user-calendars.js"
+    }
+}

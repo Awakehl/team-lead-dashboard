@@ -1,0 +1,29 @@
+{
+  "name": "team-lead-dashboard-client",
+  "description": "",
+  "main": "index.html",
+  "authors": [
+    "Semen Tanianskii"
+  ],
+  "license": "Apache",
+  "homepage": "https://github.com/Awakehl/team-lead-dashboard",
+  "moduleType": [
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.4.x",
+    "angular-mocks": "1.4.x",
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.3.6",
+    "angular-route": "1.4.x",
+    "jquery-ui": "~1.11.4",
+    "jquery.cookie": "jquery-cookie#~1.4.1"
+  }
+}
