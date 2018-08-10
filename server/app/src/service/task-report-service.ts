@@ -66,15 +66,10 @@ export class TaskReportService {
                     });
                 });
 
-                if (filter.epics) {
-                    this.taskService.getUnassignedTasks(filter.epics).then((tasks:TaskDTO[]):void => {
-                        unassignedTaskResults = tasks;
-                        resolveWhenFinished();
-                    });
-                } else {
-                    unassignedTaskResults = [];
+                this.taskService.getUnassignedTasks(filter.epics).then((tasks:TaskDTO[]):void => {
+                    unassignedTaskResults = tasks;
                     resolveWhenFinished();
-                }
+                });
 
             });
 

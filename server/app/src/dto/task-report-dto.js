@@ -8,3 +8,4 @@ var TaskReportDTO = (function () {
     return TaskReportDTO;
 })();
 exports.TaskReportDTO = TaskReportDTO;
+//# sourceMappingURL=task-report-dto.js.map

@@ -16,4 +16,3 @@ var update = function () {
 };
 update();
 setInterval(update, 30000);
-//# sourceMappingURL=import.js.map

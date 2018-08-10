@@ -1,0 +1,5 @@
+FROM phusion/baseimage:latest
+
+CMD ls -lh /
+
+ENTRYPOINT cp /root/ssh_copy/* /root/.ssh && chown -R root:root /root/.ssh

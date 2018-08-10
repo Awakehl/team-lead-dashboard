@@ -37,19 +37,14 @@ var TaskReportService = (function () {
                         resolveWhenFinished();
                     });
                 });
-                if (filter.epics) {
-                    _this.taskService.getUnassignedTasks(filter.epics).then(function (tasks) {
-                        unassignedTaskResults = tasks;
-                        resolveWhenFinished();
-                    });
-                }
-                else {
-                    unassignedTaskResults = [];
+                _this.taskService.getUnassignedTasks(filter.epics).then(function (tasks) {
+                    unassignedTaskResults = tasks;
                     resolveWhenFinished();
-                }
+                });
             });
         });
     };
     return TaskReportService;
 })();
 exports.TaskReportService = TaskReportService;
+//# sourceMappingURL=task-report-service.js.map

@@ -58,7 +58,8 @@ export class EntityConverterService {
 
         return new UserDTO(
             model['id'],
-            model['name']
+            model['name'],
+            model['displayName']
         );
     }
 

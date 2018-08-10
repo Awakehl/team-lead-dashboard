@@ -1,0 +1,54 @@
+version: '2'
+services:
+    data_ssh:
+      container_name: dd__ssh_data
+      build:
+        context: ./ssh/
+        dockerfile: Dockerfile.dev
+      volumes:
+        - ~/.ssh:/root/ssh_copy
+        - /root/.ssh
+
+    dd_php:
+        container_name: dd_php
+        build:
+          context: ./php/
+          dockerfile: Dockerfile-php7.dev
+        volumes_from:
+          - container:vendors:rw
+          - container:src:rw
+          - container:bin:rw
+          - container:web:rw
+          - container:app:rw
+          - container:app_data:rw
+        ports:
+            - "9000:9000"
+        environment:
+            APPLICATION_ENV: development
+            PHP_IDE_CONFIG: "serverName=dd"
+
+    dd_nginx:
+        container_name: dd_nginx
+        build:
+          context: ./nginx/
+          dockerfile: Dockerfile.dev
+        volumes_from:
+          - container:web:rw
+        ports:
+            - "80:80"
+        links:
+            - dd_php
+
+volumes:
+  vendors:
+    external: true
+  src:
+    external: true
+  bin:
+    external: true
+  web:
+    external: true
+  app:
+    external: true
+  app_data:
+    external: true

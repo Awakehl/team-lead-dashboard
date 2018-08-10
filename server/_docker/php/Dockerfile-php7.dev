@@ -1,0 +1,96 @@
+FROM php:7.1.3-fpm as composer
+
+ENV APPLICATION_ENV development
+
+ADD ./php.ini /usr/local/etc/php/php.ini
+
+
+# Minimal apt-get
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    libmemcached-dev \
+    libxml2 \
+    curl \
+    git \
+    unzip \
+    software-properties-common \
+    libfreetype6-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libicu-dev
+
+# Install bcmath
+RUN docker-php-ext-install bcmath \
+    mbstring \
+    intl \
+    pdo_mysql
+
+RUN docker-php-ext-install bcmath \
+    mbstring \
+    intl \
+    pdo_mysql
+
+# Install xDebug (if development environment)
+RUN if [ $APPLICATION_ENV = "development" ]; then pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+; fi
+
+# Copy xdebug configration for remote debugging
+COPY ./xdebug.ini $PHP_INI_DIR/conf.d/xdebug.ini
+
+# Install composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && php -r "unlink('composer-setup.php');"
+
+# Install blackfire probe
+RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
+    && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/$version \
+    && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
+    && mv /tmp/blackfire-*.so $(php -r "echo ini_get('extension_dir');")/blackfire.so \
+    && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707\n" > $PHP_INI_DIR/conf.d/blackfire.ini
+
+# Install node js
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get install -y nodejs
+
+
+RUN usermod -u 1000 www-data
+
+# install memcached
+
+RUN apt-get update \
+        && buildDeps=" \
+                git \
+                libmemcached-dev \
+                zlib1g-dev \
+        " \
+        && doNotUninstall=" \
+                libmemcached11 \
+                libmemcachedutil2 \
+        " \
+        && apt-get install -y $buildDeps --no-install-recommends \
+        && rm -r /var/lib/apt/lists/* \
+        \
+        && docker-php-source extract \
+        && git clone --branch php7 https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached/ \
+        && docker-php-ext-install memcached \
+        \
+        && docker-php-source delete \
+        && apt-mark manual $doNotUninstall \
+        && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $buildDeps
+
+# Install and configure GD. Placement is important, earlier in file results in error with gd.so
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libjpeg62-turbo-dev \
+    libpng12-dev \
+    libpq-dev \
+    && docker-php-ext-configure gd --with-jpeg-dir=/usr --with-png-dir=/usr \
+    && docker-php-ext-install gd \
+    && apt-mark manual libjpeg62-turbo libpq5
+
+WORKDIR /srv/www/dd/
+
+CMD ["php-fpm"]
+
+EXPOSE 9001

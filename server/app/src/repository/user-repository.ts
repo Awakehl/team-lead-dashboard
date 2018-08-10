@@ -18,7 +18,7 @@ export class UserRepository {
 
         return new Promise<UserDTO[]>((resolve: Function): void => {
 
-            this.getEntity().findAll().then(
+            this.getEntity().findAll({where: {active: 1}}).then(
                 (dbUsers: string[]): void => {
 
                     let result: UserDTO[] = [];

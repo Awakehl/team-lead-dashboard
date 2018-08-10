@@ -1,0 +1,53 @@
+version: '2'
+services:
+    dd_app:
+        build:
+            context: ./app/
+            dockerfile: Dockerfile.dev
+        volumes:
+            - ../:/srv/www/dd
+        command: /var/local/entrypoint.sh
+
+    dd_data_ssh:
+        container_name: dd_ssh_data
+        build:
+            context: ./ssh/
+            dockerfile: Dockerfile.dev
+        volumes:
+            - ~/.ssh:/root/ssh_copy
+            - /root/.ssh
+
+    dd_php:
+        container_name: dd_php
+        build:
+            context: ./php/
+            dockerfile: Dockerfile-php7.dev
+        volumes_from:
+            - dd_app
+        ports:
+          - "9000:9000"
+        environment:
+            APPLICATION_ENV: development
+            PHP_IDE_CONFIG: "serverName=dd"
+
+    dd_apache:
+        container_name: dd_apache
+        build:
+          context: ./apache/
+          dockerfile: Dockerfile
+        ports:
+          - "80:80"
+        links:
+          - dd_php:dd_php
+        volumes_from:
+          - dd_app
+
+networks:
+    default:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                -
+                    subnet: 192.200.5.0/24
+                    gateway: 192.200.5.1

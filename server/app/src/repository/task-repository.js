@@ -6,6 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Promise = require('bluebird');
 var abstract_repository_1 = require("./abstract-repository");
+var moment = require('moment');
 var TaskRepository = (function (_super) {
     __extends(TaskRepository, _super);
     function TaskRepository() {
@@ -107,6 +108,11 @@ var TaskRepository = (function (_super) {
                     $in: epics
                 };
             }
+            filter['status'] = { notIn: [
+                    'Closed', 'Done', 'Work done', 'Live'
+                ] };
+            filter['updatedAt']
+                = { gt: moment().subtract(3, 'month').format('YYYY-MM-DD HH:mm:ss') };
             _this.getEntity().findAll({ where: filter }).then(function (dbTasks) {
                 var result = [];
                 for (var _i = 0; _i < dbTasks.length; _i++) {
@@ -123,3 +129,4 @@ var TaskRepository = (function (_super) {
     return TaskRepository;
 })(abstract_repository_1.AbstractRepository);
 exports.TaskRepository = TaskRepository;
+//# sourceMappingURL=task-repository.js.map

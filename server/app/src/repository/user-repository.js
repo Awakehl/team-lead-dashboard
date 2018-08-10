@@ -10,7 +10,7 @@ var UserRepository = (function () {
     UserRepository.prototype.getAll = function () {
         var _this = this;
         return new Promise(function (resolve) {
-            _this.getEntity().findAll().then(function (dbUsers) {
+            _this.getEntity().findAll({ where: { active: 1 } }).then(function (dbUsers) {
                 var result = [];
                 for (var _i = 0; _i < dbUsers.length; _i++) {
                     var dbUser = dbUsers[_i];
@@ -41,3 +41,4 @@ var UserRepository = (function () {
     return UserRepository;
 })();
 exports.UserRepository = UserRepository;
+//# sourceMappingURL=user-repository.js.map

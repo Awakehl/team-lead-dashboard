@@ -16,6 +16,7 @@ dashboardControllers.controller('TaskController', function ($scope, $http, $rout
                 userById[user.id] = user.name;
                 userData[user.name] = {
                     user: user,
+                    displayName: user.displayName ? user.displayName : user.name,
                     tasks: {}
                 };
             }
@@ -95,3 +96,4 @@ dashboardControllers.controller('TaskController', function ($scope, $http, $rout
     update();
     setInterval(update, 30000);
 });
+//# sourceMappingURL=controllers.js.map

@@ -1,9 +1,11 @@
 var User = (function () {
     function User() {
         return app.getFramework().define('user', {
-            name: app.getFramework().definition.STRING
+            name: app.getFramework().definition.STRING,
+            displayName: app.getFramework().definition.STRING
         });
     }
     return User;
 })();
 exports.User = User;
+//# sourceMappingURL=user.js.map

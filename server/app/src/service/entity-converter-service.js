@@ -33,7 +33,7 @@ var EntityConverterService = (function () {
         };
     };
     EntityConverterService.prototype.toUserDTO = function (model) {
-        return new user_dto_1.UserDTO(model['id'], model['name']);
+        return new user_dto_1.UserDTO(model['id'], model['name'], model['displayName']);
     };
     EntityConverterService.prototype.toUserCalendarDTO = function (model) {
         return new user_calendar_dto_1.UserCalendarDTO(model['id'], model['user_id'], model['date'], model['start_time'], model['end_time']);
@@ -47,3 +47,4 @@ var EntityConverterService = (function () {
     return EntityConverterService;
 })();
 exports.EntityConverterService = EntityConverterService;
+//# sourceMappingURL=entity-converter-service.js.map

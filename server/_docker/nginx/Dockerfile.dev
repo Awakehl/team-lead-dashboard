@@ -1,0 +1,5 @@
+FROM nginx:stable-alpine
+
+ADD dev.nginx.conf /etc/nginx/conf.d/dd.conf
+
+WORKDIR /etc/nginx/conf.d/

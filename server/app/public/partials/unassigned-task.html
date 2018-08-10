@@ -1,0 +1,6 @@
+<div class="alert {{class}}" role="alert">
+    <a href="{{ data.conf.jira }}/browse/{{ task.key }}" target="_blank">{{ task.key }}</a>
+    [{{task.status}}]
+    [-/{{task.estimation}}]
+    {{ task.summary }} {{task.updatedAt}}
+</div>

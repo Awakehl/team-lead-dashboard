@@ -7,7 +7,8 @@ export class User {
 
     constructor() {
         return app.getFramework().define('user', {
-            name: app.getFramework().definition.STRING
+            name: app.getFramework().definition.STRING,
+            displayName: app.getFramework().definition.STRING
         });
     }
 

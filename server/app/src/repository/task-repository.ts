@@ -8,6 +8,7 @@ import {TaskDTO} from "../dto/task-dto";
 import Promise = require('bluebird');
 import {AbstractRepository} from "./abstract-repository";
 import Moment = moment.Moment;
+import moment = require('moment');
 import {TaskReportFilterDTO} from "../dto/task-report-filter-dto";
 
 declare var app: AppService;
@@ -143,6 +144,12 @@ export class TaskRepository extends AbstractRepository {
                     $in: epics
                 }
             }
+            filter['status'] = {notIn: [
+                'Closed', 'Done', 'Work done', 'Live'
+            ]};
+
+            filter['updatedAt']
+                = {gt: moment().subtract(3, 'month').format('YYYY-MM-DD HH:mm:ss')};
 
             this.getEntity().findAll({where: filter}).then(
                 (dbTasks: string[]): void => {

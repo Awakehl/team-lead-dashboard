@@ -24,6 +24,7 @@ dashboardControllers.controller('TaskController',
                     userById[user.id] = user.name;
                     userData[user.name] = {
                         user: user,
+                        displayName: user.displayName ? user.displayName : user.name,
                         tasks: {}
                     }
                 }

@@ -9,3 +9,4 @@ var UserCalendarDTO = (function () {
     return UserCalendarDTO;
 })();
 exports.UserCalendarDTO = UserCalendarDTO;
+//# sourceMappingURL=user-calendar-dto.js.map

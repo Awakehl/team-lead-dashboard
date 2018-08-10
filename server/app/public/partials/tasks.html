@@ -4,7 +4,7 @@
             <div class="panel-heading">Queue</div>
             <div class="panel-body">
                 <div ng-repeat="task in data.unassignedTasks">
-                    <ng-include src="'partials/task.html'" ng-init="class='alert-info'"></ng-include>
+                    <ng-include src="'partials/unassigned-task.html'" ng-init="class='alert-info'"></ng-include>
                 </div>
             </div>
         </div>
@@ -14,7 +14,7 @@
             <div class="row sortable">
                 <div ng-repeat="(name, user) in data.userData" class="pull-left panel panel-primary" data-id="{{ user.user.id }}">
 
-                    <div class="panel-heading">{{ name }}
+                    <div class="panel-heading">{{ user.displayName }}
                         <span ng-if="user.tasks['dev in progress'][0]">
                             <b>{{100*(user.tasks['dev in progress'][0].spentTime/(60*60*2)/user.tasks['dev in progress'][0].estimation).toFixed(0)}}%</b>
                         </span>

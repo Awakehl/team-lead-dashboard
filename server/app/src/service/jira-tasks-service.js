@@ -7,3 +7,4 @@ var JiraTasksService = (function () {
     return JiraTasksService;
 })();
 exports.JiraTasksService = JiraTasksService;
+//# sourceMappingURL=jira-tasks-service.js.map

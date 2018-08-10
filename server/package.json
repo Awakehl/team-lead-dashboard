@@ -2,10 +2,10 @@
 	"name": "team-lead-dashboard",
 	"version": "1.0.0",
 	"description": "Team lead dashboard server",
-	"author": "Semen Tanianskii <awakehl@gmail.com>",
+	"author": "Simon Tanianskii <awakehl@gmail.com>",
     "contributors": [
         {
-            "name": "Semen Tanianskii",
+            "name": "Simon Tanianskii",
             "email": "awakehl@gmail.com"
         }
     ],
