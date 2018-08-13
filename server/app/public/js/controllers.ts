@@ -38,12 +38,18 @@ dashboardControllers.controller('TaskController',
                     task.user = userData[task.assignee];
                     let user = userById[userTaskSummary.userId];
                     let status: string = task.status.toLowerCase();
+                    if (conf.inProgressStatuses.indexOf(status) !== -1 && task.assignee != user) {
+                        status = conf.newStatus;
+                    }
                     let userItem: any = userData[user];
                     if (!userItem.tasks.hasOwnProperty(status)) {
                         userItem.tasks[status] = [];
                     }
                     task.spentTime = userTaskSummary.spentTime;
-                    userItem.tasks[status].push(task);
+
+                    if (task.assignee == user || task.spentTime > 0) {
+                        userItem.tasks[status].push(task);
+                    }
                 }
 
                 let container = $(".sortable");

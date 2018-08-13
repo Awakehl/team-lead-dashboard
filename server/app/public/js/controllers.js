@@ -30,12 +30,17 @@ dashboardControllers.controller('TaskController', function ($scope, $http, $rout
                 task.user = userData[task.assignee];
                 var user = userById[userTaskSummary.userId];
                 var status_1 = task.status.toLowerCase();
+                if (conf.inProgressStatuses.indexOf(status_1) !== -1 && task.assignee != user) {
+                    status_1 = conf.newStatus;
+                }
                 var userItem = userData[user];
                 if (!userItem.tasks.hasOwnProperty(status_1)) {
                     userItem.tasks[status_1] = [];
                 }
                 task.spentTime = userTaskSummary.spentTime;
-                userItem.tasks[status_1].push(task);
+                if (task.assignee == user || task.spentTime > 0) {
+                    userItem.tasks[status_1].push(task);
+                }
             }
             var container = $(".sortable");
             var getItems = function () {
