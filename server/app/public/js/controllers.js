@@ -27,6 +27,7 @@ dashboardControllers.controller('TaskController', function ($scope, $http, $rout
             for (var _d = 0, _e = data.userTasksSummary; _d < _e.length; _d++) {
                 var userTaskSummary = _e[_d];
                 var task = taskById[userTaskSummary.taskId];
+                task.user = userData[task.assignee];
                 var user = userById[userTaskSummary.userId];
                 var status_1 = task.status.toLowerCase();
                 var userItem = userData[user];

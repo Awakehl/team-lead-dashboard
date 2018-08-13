@@ -2,5 +2,5 @@
     [{{task.status}}]
     [{{(task.spentTime/(60*60*2)).toFixed(1)}}/{{task.estimation}}]
     <a href="{{ data.conf.jira }}/browse/{{ task.key }}" target="_blank">{{ task.key }}</a>
-    {{ task.summary }} ({{ task.assignee }})
+    {{ task.summary }} ({{ task.user.displayName }})
 </div>

@@ -35,6 +35,7 @@ dashboardControllers.controller('TaskController',
 
                 for(let userTaskSummary of data.userTasksSummary) {
                     let task = taskById[userTaskSummary.taskId];
+                    task.user = userData[task.assignee];
                     let user = userById[userTaskSummary.userId];
                     let status: string = task.status.toLowerCase();
                     let userItem: any = userData[user];
