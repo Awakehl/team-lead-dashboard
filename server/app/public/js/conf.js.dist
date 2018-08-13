@@ -1,3 +1,5 @@
 var conf = {
-    jira: 'fixme'
+    jira: 'fixme',
+    inProgressStatuses: ['dev in progress', 'in progress'],
+    newStatus: 'new',
 }
